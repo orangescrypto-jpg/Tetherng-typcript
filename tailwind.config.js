@@ -1,9 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
+        dark: {
+          DEFAULT: '#0A0F0D',
+          50: '#0F1613',
+          100: '#131A17',
+          200: '#1A2420',
+          300: '#1E2B26',
+          400: '#263832',
+          500: '#2F453D',
+        },
         brand: {
           50: '#E8F5F0',
           100: '#C5E8DB',
@@ -29,29 +39,20 @@ export default {
           800: '#583E14',
           900: '#33240E',
         },
-        surface: {
-          0: '#0A0F0D',
-          50: '#0F1613',
-          100: '#131A17',
-          200: '#1A2420',
-          300: '#1E2B26',
-          400: '#263832',
-          500: '#2F453D',
-        },
-        muted: '#6B7B74',
-        danger: '#E54D4D',
-        success: '#2ECC71',
+        muted: 'rgb(var(--muted) / <alpha-value>)',
+        danger: 'rgb(var(--danger) / <alpha-value>)',
+        success: 'rgb(var(--success) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Playfair Display"', 'serif'],
         body: ['"DM Sans"', 'sans-serif'],
       },
       boxShadow: {
-        'glow-gold': '0 0 20px rgba(212, 168, 83, 0.25)',
-        'glow-brand': '0 0 20px rgba(26, 138, 110, 0.2)',
-        'glow-danger': '0 0 15px rgba(229, 77, 77, 0.2)',
-        'card': '0 2px 8px rgba(0,0,0,0.3)',
-        'card-hover': '0 8px 30px rgba(0,0,0,0.4)',
+        'glow-gold': 'var(--shadow-glow-gold)',
+        'glow-brand': 'var(--shadow-glow-brand)',
+        'glow-danger': 'var(--shadow-glow-danger)',
+        'card': 'var(--shadow-card)',
+        'card-hover': 'var(--shadow-card-hover)',
       },
       animation: {
         'pulse-slow': 'pulse 3s ease-in-out infinite',
