@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-surface-300;
+  }
+
+  body {
+    @apply bg-surface-0 text-white;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-50;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-400 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-500;
+  }
+
+  ::selection {
+    @apply bg-brand-500/30 text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white
+           transition-all duration-200 hover:bg-brand-400 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gold-400 px-5 py-2.5 text-sm font-bold text-surface-0
+           transition-all duration-200 hover:bg-gold-300 active:scale-[0.97] shadow-glow-gold disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-surface-300 bg-transparent px-5 py-2.5 text-sm font-medium text-white
+           transition-all duration-200 hover:border-brand-500 hover:bg-brand-500/10 active:scale-[0.97];
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-danger px-5 py-2.5 text-sm font-semibold text-white
+           transition-all duration-200 hover:bg-danger/80 active:scale-[0.97];
+  }
+
+  .card {
+    @apply rounded-2xl border border-surface-300 bg-surface-100 p-5 transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply card hover:border-surface-400 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border border-surface-300 bg-surface-50 px-4 py-3 text-sm text-white
+           placeholder:text-muted transition-colors duration-200
+           focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500/50;
+  }
+
+  .badge-featured {
+    @apply inline-flex items-center gap-1 rounded-lg bg-gold-400/15 px-2.5 py-1 text-xs font-bold text-gold-400 border border-gold-400/20;
+  }
+
+  .badge-urgent {
+    @apply inline-flex items-center gap-1 rounded-lg bg-danger/15 px-2.5 py-1 text-xs font-bold text-danger border border-danger/20;
+  }
+
+  .badge-verified {
+    @apply inline-flex items-center gap-1 rounded-lg bg-success/15 px-2.5 py-1 text-xs font-bold text-success border border-success/20;
+  }
+
+  .badge-free {
+    @apply inline-flex items-center gap-1 rounded-lg bg-surface-300/50 px-2.5 py-1 text-xs font-medium text-muted;
+  }
+
+  .section-heading {
+    @apply font-display text-3xl font-bold tracking-tight md:text-4xl;
+  }
+
+  .glass {
+    @apply bg-surface-100/80 backdrop-blur-xl border border-surface-300/50;
+  }
+
+  /* Featured listing card glow */
+  .listing-featured {
+    @apply relative overflow-hidden rounded-2xl border-2 border-gold-400/40 bg-surface-100 shadow-glow-gold;
+  }
+
+  .listing-featured::before {
+    content: '';
+    @apply absolute -top-20 -right-20 h-40 w-40 rounded-full bg-gold-400/10 blur-3xl;
+  }
+
+  /* Top placement pinned style */
+  .listing-pinned {
+    @apply relative overflow-hidden rounded-2xl border border-brand-500/40 bg-surface-100 shadow-glow-brand;
+  }
+
+  /* Urgent listing pulse */
+  .listing-urgent {
+    @apply relative overflow-hidden rounded-2xl border border-danger/30 bg-surface-100 shadow-glow-danger;
+  }
+
+  /* Pricing card popular */
+  .pricing-popular {
+    @apply relative rounded-2xl border-2 border-gold-400 bg-surface-100 shadow-glow-gold;
+  }
+
+  /* Escrow stepper */
+  .step-active {
+    @apply flex items-center gap-3 rounded-xl bg-brand-500/10 border border-brand-500/30 p-4;
+  }
+
+  .step-completed {
+    @apply flex items-center gap-3 rounded-xl bg-success/5 border border-success/20 p-4;
+  }
+
+  .step-pending {
+    @apply flex items-center gap-3 rounded-xl bg-surface-200/50 border border-surface-300 p-4 opacity-60;
+  }
+}
