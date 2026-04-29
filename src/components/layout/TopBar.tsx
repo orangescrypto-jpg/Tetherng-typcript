@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Search, Bell, Menu, ChevronDown, LogOut,
-  User, Settings, CheckCircle2, MessageSquare,
+  User, Settings, CheckCircle2, MessageSquare, Shield,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useAuthStore } from '@/store/authStore';
@@ -24,8 +24,19 @@ export default function TopBar() {
         <button className="lg:hidden p-2 rounded-lg text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200 transition-colors" onClick={toggleSidebar}>
           <Menu className="h-5 w-5" />
         </button>
+
+        {/* Clickable logo — links back to landing page */}
+        <Link to="/" className="flex items-center gap-2 shrink-0">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600">
+            <Shield className="h-4 w-4 text-white" />
+          </div>
+          <span className="font-display text-lg font-bold text-gray-900 dark:text-white hidden sm:block">
+            Tether<span className="text-brand-600 dark:text-brand-400">NG</span>
+          </span>
+        </Link>
+
         <div className={cn(
-          'hidden sm:flex items-center gap-2 rounded-xl border px-3 py-2 transition-all duration-200 flex-1 max-w-md',
+          'hidden sm:flex items-center gap-2 rounded-xl border px-3 py-2 transition-all duration-200 flex-1 max-w-md ml-4',
           searchFocused
             ? 'border-brand-500 bg-white dark:bg-dark-50 shadow-glow-brand'
             : 'border-gray-200 dark:border-dark-400 bg-gray-50 dark:bg-dark-50',
