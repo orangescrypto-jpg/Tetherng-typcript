@@ -1,12 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 import ThemeInitializer from '@/components/layout/ThemeInitializer';
 import LandingPage from '@/pages/LandingPage';
+import ListingsPage from '@/pages/ListingsPage';
 import AuthLayout from '@/components/layout/AuthLayout';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import LoginPage from '@/pages/auth/LoginPage';
 import SignupPage from '@/pages/auth/SignupPage';
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
+import CreateListingPage from '@/pages/dashboard/CreateListingPage';
+import SubscriptionPage from '@/pages/dashboard/SubscriptionPage';
+import VerificationPage from '@/pages/dashboard/VerificationPage';
 
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -26,6 +30,7 @@ export default function App() {
       <ThemeInitializer />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/listings" element={<ListingsPage />} />
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
@@ -34,18 +39,17 @@ export default function App() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/listings" element={<PlaceholderPage title="My Listings" />} />
-          <Route path="/dashboard/listings/new" element={<PlaceholderPage title="Create Listing" />} />
+          <Route path="/dashboard/listings/new" element={<CreateListingPage />} />
           <Route path="/dashboard/saved" element={<PlaceholderPage title="Saved Properties" />} />
           <Route path="/dashboard/escrow" element={<PlaceholderPage title="Escrow Transactions" />} />
           <Route path="/dashboard/messages" element={<PlaceholderPage title="Messages" />} />
           <Route path="/dashboard/notifications" element={<PlaceholderPage title="Notifications" />} />
-          <Route path="/dashboard/subscription" element={<PlaceholderPage title="Subscription Plans" />} />
-          <Route path="/dashboard/verification" element={<PlaceholderPage title="Get Verified" />} />
+          <Route path="/dashboard/subscription" element={<SubscriptionPage />} />
+          <Route path="/dashboard/verification" element={<VerificationPage />} />
           <Route path="/dashboard/boost" element={<PlaceholderPage title="Boost Listings" />} />
           <Route path="/dashboard/settings" element={<PlaceholderPage title="Account Settings" />} />
         </Route>
-        <Route path="/listings" element={<PlaceholderPage title="Browse All Listings" />} />
-        <Route path="/pricing" element={<PlaceholderPage title="Pricing" />} />
+        <Route path="/pricing" element={<SubscriptionPage />} />
         <Route path="/about" element={<PlaceholderPage title="About TetherNG" />} />
         <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
         <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
