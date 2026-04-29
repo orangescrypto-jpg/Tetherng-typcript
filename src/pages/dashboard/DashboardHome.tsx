@@ -9,7 +9,6 @@ import { formatCurrencyShort } from '@/utils/formatCurrency';
 import { useAuthStore } from '@/store/authStore';
 import type { PropertyListing } from '@/types';
 
-/* ─── Dummy data per role ─── */
 const TENANT_STATS = [
   { label: 'Saved Properties', value: '8', icon: Building2, color: 'text-brand-400' },
   { label: 'Active Escrow', value: '1', icon: Shield, color: 'text-gold-400' },
@@ -43,6 +42,7 @@ const RECENT_LISTINGS: PropertyListing[] = [
     status: 'active',
     viewsCount: 312,
     inquiriesCount: 5,
+    furnished: false,
     createdAt: '2024-10-15',
     updatedAt: '2024-10-15',
   },
@@ -64,6 +64,7 @@ const RECENT_LISTINGS: PropertyListing[] = [
     status: 'active',
     viewsCount: 1247,
     inquiriesCount: 18,
+    furnished: true,
     createdAt: '2024-10-10',
     updatedAt: '2024-10-10',
   },
@@ -85,6 +86,7 @@ const RECENT_LISTINGS: PropertyListing[] = [
     status: 'active',
     viewsCount: 876,
     inquiriesCount: 9,
+    furnished: false,
     createdAt: '2024-10-08',
     updatedAt: '2024-10-08',
   },
@@ -117,10 +119,9 @@ export default function DashboardHome() {
         )}
       </div>
 
-      {/* ─── Upsell banners (AGENT ONLY) ─── */}
+      {/* Upsell banners (AGENT ONLY) */}
       {isAgent && (
         <div className="grid gap-4 sm:grid-cols-2">
-          {/* Verification upsell */}
           {user?.verificationStatus !== 'approved' && (
             <Link
               to="/dashboard/verification"
@@ -139,7 +140,6 @@ export default function DashboardHome() {
             </Link>
           )}
 
-          {/* Subscription upsell */}
           {(!user?.subscriptionPlan || user.subscriptionPlan === 'free') && (
             <Link
               to="/dashboard/subscription"
@@ -160,7 +160,7 @@ export default function DashboardHome() {
         </div>
       )}
 
-      {/* ─── Stats cards ─── */}
+      {/* Stats cards */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map((stat) => (
           <div key={stat.label} className="card-hover">
@@ -173,7 +173,7 @@ export default function DashboardHome() {
         ))}
       </div>
 
-      {/* ─── Agent: Recent listings + boost CTAs ─── */}
+      {/* Agent: Recent listings + boost CTAs */}
       {isAgent && (
         <div>
           <div className="flex items-center justify-between mb-5">
@@ -186,7 +186,6 @@ export default function DashboardHome() {
           <div className="space-y-3">
             {RECENT_LISTINGS.map((listing) => (
               <div key={listing.id} className="card-hover flex gap-4">
-                {/* Thumbnail */}
                 <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl sm:h-24 sm:w-36">
                   <img
                     src={listing.images[0]}
@@ -206,7 +205,6 @@ export default function DashboardHome() {
                   )}
                 </div>
 
-                {/* Info */}
                 <div className="flex flex-1 flex-col justify-between min-w-0 py-0.5">
                   <div>
                     <h3 className="text-sm font-semibold text-white truncate">{listing.title}</h3>
@@ -223,7 +221,6 @@ export default function DashboardHome() {
                   </div>
                 </div>
 
-                {/* Boost CTA for non-boosted listings */}
                 {listing.boostType === 'none' && (
                   <Link
                     to={`/dashboard/listings/${listing.id}/boost`}
@@ -237,7 +234,6 @@ export default function DashboardHome() {
             ))}
           </div>
 
-          {/* Boost all CTA */}
           <div className="mt-5 rounded-xl border border-surface-300 bg-surface-100 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-400/10">
@@ -256,7 +252,7 @@ export default function DashboardHome() {
         </div>
       )}
 
-      {/* ─── Tenant: Quick actions ─── */}
+      {/* Tenant: Quick actions */}
       {!isAgent && (
         <div className="grid gap-4 sm:grid-cols-3">
           <Link to="/listings" className="card-hover flex flex-col items-center gap-3 p-6 text-center group">
@@ -289,7 +285,7 @@ export default function DashboardHome() {
         </div>
       )}
 
-      {/* ─── Activity feed placeholder ─── */}
+      {/* Activity feed */}
       <div className="card">
         <h2 className="text-lg font-bold text-white mb-4">Recent Activity</h2>
         <div className="space-y-4">
