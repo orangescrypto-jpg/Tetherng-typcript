@@ -5,17 +5,11 @@ import { useAuthStore } from '@/store/authStore';
 
 export default function DashboardLayout() {
   const { isAuthenticated } = useAuthStore();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
-    <div className="flex h-screen overflow-hidden bg-surface-0">
-      {/* Sidebar */}
+    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-dark">
       <Sidebar />
-
-      {/* Main content area */}
       <div className="flex flex-1 flex-col overflow-hidden">
         <TopBar />
         <main className="flex-1 overflow-y-auto">
