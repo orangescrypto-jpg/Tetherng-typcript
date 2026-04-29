@@ -9,7 +9,6 @@ import {
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useAuthStore } from '@/store/authStore';
-import type { UserRole } from '@/types';
 
 const signupSchema = z.object({
   firstName: z.string().min(2, 'First name is required'),
@@ -27,7 +26,9 @@ const signupSchema = z.object({
 
 type SignupFormData = z.infer<typeof signupSchema>;
 
-const ROLES: { value: UserRole; label: string; description: string; icon: React.ElementType; color: string }[] = [
+type SignupRole = 'tenant' | 'agent' | 'landlord';
+
+const ROLES: { value: SignupRole; label: string; description: string; icon: React.ElementType; color: string }[] = [
   {
     value: 'tenant',
     label: 'I want to Rent',
@@ -73,11 +74,9 @@ export default function SignupPage() {
   const selectedRole = watch('role');
   const password = watch('password');
 
-  const handleRoleSelect = async (role: UserRole) => {
+  const handleRoleSelect = async (role: SignupRole) => {
     setValue('role', role);
-    // Trigger validation for role field
     await trigger('role');
-    // Auto advance to step 2 after brief delay
     setTimeout(() => setStep(2), 200);
   };
 
@@ -85,7 +84,6 @@ export default function SignupPage() {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 1500));
 
-    // Simulate account creation
     setAuth({
       id: 'u-new-' + Date.now(),
       email: data.email,
@@ -190,7 +188,6 @@ export default function SignupPage() {
             <p className="mt-3 text-xs text-danger">{errors.role.message}</p>
           )}
 
-          {/* Agent upsell hint */}
           {selectedRole === 'agent' && (
             <div className="mt-6 rounded-xl bg-gold-400/5 border border-gold-400/20 p-4 animate-slide-up">
               <p className="text-xs font-bold text-gold-400">🎯 Agent Tip</p>
@@ -221,7 +218,6 @@ export default function SignupPage() {
             </button>
           </div>
 
-          {/* Name fields */}
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="mb-1.5 block text-sm font-medium text-white">First Name</label>
@@ -286,7 +282,6 @@ export default function SignupPage() {
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {/* Password strength bar */}
             {password && (
               <div className="mt-2">
                 <div className="flex gap-1">
@@ -317,7 +312,6 @@ export default function SignupPage() {
             {errors.confirmPassword && <p className="mt-1 text-xs text-danger">{errors.confirmPassword.message}</p>}
           </div>
 
-          {/* Terms checkbox */}
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -355,7 +349,6 @@ export default function SignupPage() {
         </form>
       )}
 
-      {/* Sign in link */}
       <p className="mt-6 text-center text-sm text-muted">
         Already have an account?{' '}
         <Link to="/login" className="font-semibold text-brand-400 hover:text-brand-300 transition-colors">
