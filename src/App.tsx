@@ -13,6 +13,8 @@ import SubscriptionPage from '@/pages/dashboard/SubscriptionPage';
 import VerificationPage from '@/pages/dashboard/VerificationPage';
 import EscrowPage from '@/pages/dashboard/EscrowPage';
 import EscrowDetailPage from '@/pages/escrow/EscrowDetailPage';
+import MessagesPage from '@/pages/dashboard/MessagesPage';
+import NotificationsPage from '@/pages/dashboard/NotificationsPage';
 
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -21,7 +23,7 @@ function PlaceholderPage({ title }: { title: string }) {
         <span className="text-2xl">🚧</span>
       </div>
       <h1 className="mt-6 font-display text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
-      <p className="mt-2 text-sm text-muted">This page will be built in the next step.</p>
+      <p className="mt-2 text-sm text-muted">Coming soon</p>
     </div>
   );
 }
@@ -31,13 +33,19 @@ export default function App() {
     <>
       <ThemeInitializer />
       <Routes>
+        {/* Public */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/listings" element={<ListingsPage />} />
+        <Route path="/pricing" element={<SubscriptionPage />} />
+
+        {/* Auth */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
+
+        {/* Dashboard */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/listings" element={<PlaceholderPage title="My Listings" />} />
@@ -45,14 +53,15 @@ export default function App() {
           <Route path="/dashboard/saved" element={<PlaceholderPage title="Saved Properties" />} />
           <Route path="/dashboard/escrow" element={<EscrowPage />} />
           <Route path="/dashboard/escrow/:id" element={<EscrowDetailPage />} />
-          <Route path="/dashboard/messages" element={<PlaceholderPage title="Messages" />} />
-          <Route path="/dashboard/notifications" element={<PlaceholderPage title="Notifications" />} />
+          <Route path="/dashboard/messages" element={<MessagesPage />} />
+          <Route path="/dashboard/notifications" element={<NotificationsPage />} />
           <Route path="/dashboard/subscription" element={<SubscriptionPage />} />
           <Route path="/dashboard/verification" element={<VerificationPage />} />
           <Route path="/dashboard/boost" element={<PlaceholderPage title="Boost Listings" />} />
           <Route path="/dashboard/settings" element={<PlaceholderPage title="Account Settings" />} />
         </Route>
-        <Route path="/pricing" element={<SubscriptionPage />} />
+
+        {/* Static pages */}
         <Route path="/about" element={<PlaceholderPage title="About TetherNG" />} />
         <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
         <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
