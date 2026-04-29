@@ -461,14 +461,14 @@ export default function LandingPage() {
 
 /* ─── Listing Card Sub-component ─── */
 function ListingCard({ listing }: { listing: typeof FEATURED_LISTINGS[number] }) {
-  const boostConfig = {
-    none: { wrapper: 'card-hover', badge: null },
-    featured: { wrapper: 'listing-featured', badge: { type: 'featured' as const } },
-    top_placement: { wrapper: 'listing-pinned', badge: { type: 'pinned' as const } },
-    urgent: { wrapper: 'listing-urgent', badge: { type: 'urgent' as const } },
+  const boostConfig: Record<string, { wrapper: string; badge: { type: string } | null }> = {
+    featured: { wrapper: 'listing-featured', badge: { type: 'featured' } },
+    top_placement: { wrapper: 'listing-pinned', badge: { type: 'pinned' } },
+    urgent: { wrapper: 'listing-urgent', badge: { type: 'urgent' } },
   };
 
-  const config = boostConfig[listing.boostType];
+  const config = boostConfig[listing.boostType] || { wrapper: 'card-hover', badge: null };
+  const hasBoost = listing.boostType === 'featured' || listing.boostType === 'top_placement' || listing.boostType === 'urgent';
 
   return (
     <div className={cn(config.wrapper, 'group cursor-pointer')}>
@@ -519,7 +519,7 @@ function ListingCard({ listing }: { listing: typeof FEATURED_LISTINGS[number] })
             <span className="h-1 w-1 rounded-full bg-surface-400" />
             <span>{listing.baths} Bath{listing.baths > 1 ? 's' : ''}</span>
           </div>
-          {listing.boostType !== 'none' && (
+          {hasBoost && (
             <span className="text-[10px] font-medium text-gold-400">
               {listing.viewsCount.toLocaleString()} views
             </span>
