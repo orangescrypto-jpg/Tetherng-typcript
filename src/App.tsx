@@ -14,7 +14,9 @@ import VerificationPage from '@/pages/dashboard/VerificationPage';
 import EscrowPage from '@/pages/dashboard/EscrowPage';
 import EscrowDetailPage from '@/pages/escrow/EscrowDetailPage';
 import MessagesPage from '@/pages/dashboard/MessagesPage';
-import NotificationsPage from '@/pages/dashboard/NotificationsPage';
+import NotificationsPage from '@/pages/NotificationsPage';
+import SettingsPage from '@/pages/dashboard/SettingsPage';
+import StaticPages from '@/pages/StaticPages';
 
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -57,17 +59,18 @@ export default function App() {
           <Route path="/dashboard/notifications" element={<NotificationsPage />} />
           <Route path="/dashboard/subscription" element={<SubscriptionPage />} />
           <Route path="/dashboard/verification" element={<VerificationPage />} />
-          <Route path="/dashboard/boost" element={<PlaceholderPage title="Boost Listings" />} />
-          <Route path="/dashboard/settings" element={<PlaceholderPage title="Account Settings" />} />
+          <Route path="/dashboard/boost" element={<BoostListingsPage />} />
+          <Route path="/dashboard/settings" element={<SettingsPage />} />
         </Route>
 
         {/* Static pages */}
-        <Route path="/about" element={<PlaceholderPage title="About TetherNG" />} />
-        <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
-        <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
-        <Route path="/terms" element={<PlaceholderPage title="Terms of Service" />} />
-        <Route path="/refund" element={<PlaceholderPage title="Refund Policy" />} />
+        <Route path="/about" element={<StaticPages />} />
+        <Route path="/contact" element={<StaticPages />} />
+        <Route path="/privacy" element={<StaticPages />} />
+        <Route path="/terms" element={<StaticPages />} />
+        <Route path="/refund" element={<StaticPages />} />
       </Routes>
     </>
+  />
   );
 }
