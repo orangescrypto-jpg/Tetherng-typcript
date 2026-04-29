@@ -4,8 +4,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Eye, EyeOff, Shield, ArrowRight, Loader2 } from 'lucide-react';
+import { cn } from '@/utils/cn';
 import { useAuthStore } from '@/store/authStore';
-import type { User, UserRole } from '@/types';
+import type { User } from '@/types';
 
 const loginSchema = z.object({
   email: z.string().email('Enter a valid email address'),
@@ -82,7 +83,6 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    // Simulate API call
     await new Promise((r) => setTimeout(r, 1200));
 
     const demo = DEMO_USERS[data.email.toLowerCase()];
@@ -110,14 +110,12 @@ export default function LoginPage() {
         </p>
       </div>
 
-      {/* Error alert */}
       {error && (
         <div className="mb-6 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm text-danger">
           {error}
         </div>
       )}
 
-      {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div>
           <label className="mb-1.5 block text-sm font-medium text-white">Email Address</label>
@@ -184,14 +182,12 @@ export default function LoginPage() {
         </button>
       </form>
 
-      {/* Divider */}
       <div className="my-6 flex items-center gap-3">
         <div className="h-px flex-1 bg-surface-300" />
         <span className="text-xs text-muted">or continue with</span>
         <div className="h-px flex-1 bg-surface-300" />
       </div>
 
-      {/* Social login placeholders */}
       <div className="grid grid-cols-2 gap-3">
         <button className="btn-outline py-2.5 text-sm">
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -210,7 +206,6 @@ export default function LoginPage() {
         </button>
       </div>
 
-      {/* Demo accounts */}
       <div className="mt-8 rounded-xl border border-surface-300 bg-surface-100/50 p-4">
         <div className="flex items-center gap-2 mb-3">
           <Shield className="h-4 w-4 text-brand-400" />
@@ -238,7 +233,6 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Sign up link */}
       <p className="mt-6 text-center text-sm text-muted">
         Don't have an account?{' '}
         <Link to="/signup" className="font-semibold text-brand-400 hover:text-brand-300 transition-colors">
@@ -248,6 +242,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-/* Need cn import */
-import { cn } from '@/utils/cn';
