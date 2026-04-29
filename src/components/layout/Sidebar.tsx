@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Search, Heart, Shield, MessageSquare,
   Bell, Settings, PlusCircle, Building2, CreditCard,
-  CheckCircle2, X, Tag, ChevronLeft,
+  CheckCircle2, X, Tag,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useAuthStore } from '@/store/authStore';
@@ -188,9 +188,7 @@ export default function Sidebar() {
                   )
                 }
               >
-                <item.icon className={cn(
-                  'h-[18px] w-[18px] shrink-0 transition-colors',
-                )} />
+                <item.icon className="h-[18px] w-[18px] shrink-0 transition-colors" />
                 <span className="flex-1">{item.label}</span>
                 {item.badge && (
                   <span className={cn(
