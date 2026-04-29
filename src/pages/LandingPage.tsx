@@ -75,11 +75,12 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute top-0 left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-brand-100/60 dark:bg-brand-500/8 blur-[120px]" />
-          <div className="absolute top-40 right-0 h-[300px] w-[400px] rounded-full bg-amber-100/40 dark:bg-gold-400/5 blur-[100px]" />
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <div className="absolute top-0 left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-brand-100/40 dark:bg-brand-500/8 blur-[120px]" />
+          <div className="absolute top-40 right-0 h-[300px] w-[400px] rounded-full bg-amber-100/30 dark:bg-gold-400/5 blur-[100px]" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* FIX: z-10 pushes ALL content above the blur layer */}
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
             <span className="badge-verified"><CheckCircle2 className="h-3 w-3" /> BVN Verified Agents</span>
             <span className="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 dark:bg-brand-500/10 px-2.5 py-1 text-xs font-semibold text-brand-700 dark:text-brand-400 border border-brand-200 dark:border-brand-500/20">
@@ -89,18 +90,20 @@ export default function LandingPage() {
           </div>
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="font-display text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
-              Buy, Sell & Rent.{' '}
-              <span className="bg-gradient-to-r from-brand-600 to-brand-500 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent">Pay With Escrow.</span>
+              Buy, Sell &amp; Rent.{' '}
+              <span className="bg-gradient-to-r from-brand-600 to-brand-500 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent">
+                Pay With Escrow.
+              </span>
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-gray-600 dark:text-muted sm:text-xl">
+            <p className="mt-6 text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl">
               TetherNG connects you to verified agents and holds your payments securely until you're satisfied. No more scams, no more guesswork — just safe, transparent property deals.
             </p>
           </div>
           <div className="mx-auto mt-10 max-w-2xl">
             <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-100 p-3 shadow-card sm:flex-row sm:items-center">
               <div className="flex flex-1 items-center gap-3 rounded-xl bg-gray-50 dark:bg-dark-50 px-4 py-3">
-                <Search className="h-5 w-5 text-muted shrink-0" />
-                <input type="text" placeholder="Search properties, locations..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-transparent text-sm text-gray-900 dark:text-white placeholder:text-muted outline-none" />
+                <Search className="h-5 w-5 text-gray-400 dark:text-muted shrink-0" />
+                <input type="text" placeholder="Search properties, locations..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-transparent text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-muted outline-none" />
               </div>
               <div className="relative flex-1 sm:max-w-[200px]">
                 <select value={searchLocation} onChange={(e) => setSearchLocation(e.target.value)} className="input-field appearance-none pr-10">
@@ -110,7 +113,7 @@ export default function LandingPage() {
                   <option value="port-harcourt">Port Harcourt</option>
                   <option value="ibadan">Ibadan</option>
                 </select>
-                <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-muted" />
+                <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-muted" />
               </div>
               <Link to="/listings" className="btn-primary flex items-center justify-center gap-2 px-6 py-3 sm:py-3.5">
                 <Search className="h-4 w-4" /> Search
@@ -118,7 +121,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500 dark:text-muted">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               Are you an agent?{' '}
               <Link to="/pricing" className="font-semibold text-amber-600 dark:text-gold-400 hover:text-amber-700 dark:hover:text-gold-300 transition-colors">
                 Boost your listings and get more leads <ArrowRight className="inline h-3.5 w-3.5" />
@@ -135,7 +138,7 @@ export default function LandingPage() {
             <div key={stat.label} className="flex flex-col items-center text-center gap-2">
               <stat.icon className="h-6 w-6 text-brand-600 dark:text-brand-400" />
               <span className="font-display text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">{stat.value}</span>
-              <span className="text-xs font-medium text-muted sm:text-sm">{stat.label}</span>
+              <span className="text-xs font-medium text-gray-500 dark:text-muted sm:text-sm">{stat.label}</span>
             </div>
           ))}
         </div>
@@ -147,7 +150,7 @@ export default function LandingPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 className="section-heading">Featured Properties</h2>
-              <p className="mt-2 text-muted">Handpicked premium listings from verified agents</p>
+              <p className="mt-2 text-gray-500 dark:text-muted">Handpicked premium listings from verified agents</p>
             </div>
             <div className="flex gap-2">
               <span className="badge-featured cursor-pointer"><Star className="h-3 w-3" /> Featured</span>
@@ -168,7 +171,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-heading">How TetherNG Works</h2>
-            <p className="mt-3 text-muted max-w-2xl mx-auto">A simple, secure process that protects both buyers and sellers from start to finish.</p>
+            <p className="mt-3 text-gray-500 dark:text-muted max-w-2xl mx-auto">A simple, secure process that protects both buyers and sellers from start to finish.</p>
           </div>
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {[
@@ -180,7 +183,7 @@ export default function LandingPage() {
               <div key={item.step} className="card-hover group relative text-center">
                 <span className={cn('font-display text-5xl font-black opacity-15 dark:opacity-20 transition-opacity group-hover:opacity-30', item.color)}>{item.step}</span>
                 <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{item.desc}</p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-500 dark:text-muted">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -192,7 +195,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-heading">Why Trust TetherNG?</h2>
-            <p className="mt-3 text-muted max-w-2xl mx-auto">We built every feature around one question: how do we make property transactions in Nigeria actually safe?</p>
+            <p className="mt-3 text-gray-500 dark:text-muted max-w-2xl mx-auto">We built every feature around one question: how do we make property transactions in Nigeria actually safe?</p>
           </div>
           <div className="mt-14 grid gap-6 sm:grid-cols-2">
             {TRUST_FEATURES.map((feature) => (
@@ -202,7 +205,7 @@ export default function LandingPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">{feature.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{feature.description}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-gray-500 dark:text-muted">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -216,7 +219,7 @@ export default function LandingPage() {
           <div className="text-center">
             <span className="badge-featured mb-4 inline-flex"><Star className="h-3 w-3" /> For Agents & Landlords</span>
             <h2 className="section-heading">Grow Your Business on TetherNG</h2>
-            <p className="mt-3 text-muted max-w-2xl mx-auto">From free listings to premium subscriptions — choose the plan that fits your pipeline.</p>
+            <p className="mt-3 text-gray-500 dark:text-muted max-w-2xl mx-auto">From free listings to premium subscriptions — choose the plan that fits your pipeline.</p>
           </div>
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -231,11 +234,11 @@ export default function LandingPage() {
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">{plan.name}</h3>
                   <div className="mt-2 flex items-baseline gap-1">
                     <span className="font-display text-3xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
-                    <span className="text-sm text-muted">{plan.period}</span>
+                    <span className="text-sm text-gray-500 dark:text-muted">{plan.period}</span>
                   </div>
                 </div>
                 <ul className="mt-6 flex flex-col gap-3 flex-1">
-                  {plan.features.map((f) => (<li key={f} className="flex items-start gap-2 text-sm text-gray-600 dark:text-muted"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-600 dark:text-brand-400" />{f}</li>))}
+                  {plan.features.map((f) => (<li key={f} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-600 dark:text-brand-400" />{f}</li>))}
                 </ul>
                 <Link to="/pricing" className={cn('mt-6 w-full text-center text-sm font-semibold py-3 rounded-xl transition-all', plan.featured ? 'btn-gold' : 'btn-outline')}>{plan.cta}</Link>
               </div>
@@ -248,12 +251,12 @@ export default function LandingPage() {
       <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-3xl border border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-100 p-10 sm:p-16 text-center">
-            <div className="pointer-events-none absolute inset-0">
-              <div className="absolute -top-20 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-brand-100/50 dark:bg-brand-500/10 blur-[100px]" />
+            <div className="pointer-events-none absolute inset-0 z-0">
+              <div className="absolute -top-20 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-brand-100/40 dark:bg-brand-500/10 blur-[100px]" />
             </div>
-            <div className="relative">
+            <div className="relative z-10">
               <h2 className="font-display text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Ready to Transact Safely?</h2>
-              <p className="mx-auto mt-4 max-w-xl text-muted">Join thousands of Nigerians buying, selling, and renting through TetherNG's secure escrow marketplace.</p>
+              <p className="mx-auto mt-4 max-w-xl text-gray-500 dark:text-muted">Join thousands of Nigerians buying, selling, and renting through TetherNG's secure escrow marketplace.</p>
               <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                 <Link to="/signup" className="btn-primary px-8 py-3.5 text-base">Create Free Account <ArrowRight className="h-4 w-4" /></Link>
                 <Link to="/pricing" className="btn-gold px-8 py-3.5 text-base">Boost Your Listing <Rocket className="h-4 w-4" /></Link>
@@ -272,36 +275,36 @@ export default function LandingPage() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600"><Shield className="h-4 w-4 text-white" /></div>
                 <span className="font-display text-lg font-bold text-gray-900 dark:text-white">Tether<span className="text-brand-600 dark:text-brand-400">NG</span></span>
               </Link>
-              <p className="mt-4 text-sm leading-relaxed text-muted">Nigeria's most trusted property marketplace with secure escrow transactions.</p>
+              <p className="mt-4 text-sm leading-relaxed text-gray-500 dark:text-muted">Nigeria's most trusted property marketplace with secure escrow transactions.</p>
             </div>
             <div>
               <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Platform</h4>
               <ul className="mt-4 flex flex-col gap-2.5">
-                <li><Link to="/listings" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Browse Listings</Link></li>
-                <li><Link to="/pricing" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link to="/how-it-works" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">How It Works</Link></li>
-                <li><Link to="/verification" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Get Verified</Link></li>
+                <li><Link to="/listings" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Browse Listings</Link></li>
+                <li><Link to="/pricing" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link to="/how-it-works" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">How It Works</Link></li>
+                <li><Link to="/verification" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Get Verified</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Company</h4>
               <ul className="mt-4 flex flex-col gap-2.5">
-                <li><Link to="/about" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">About Us</Link></li>
-                <li><Link to="/contact" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Contact</Link></li>
-                <li><Link to="/careers" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Careers</Link></li>
+                <li><Link to="/about" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">About Us</Link></li>
+                <li><Link to="/contact" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Contact</Link></li>
+                <li><Link to="/careers" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Careers</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Legal</h4>
               <ul className="mt-4 flex flex-col gap-2.5">
-                <li><Link to="/privacy" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link to="/terms" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link to="/refund" className="text-sm text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Refund Policy</Link></li>
+                <li><Link to="/privacy" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/refund" className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">Refund Policy</Link></li>
               </ul>
             </div>
           </div>
           <div className="mt-10 border-t border-gray-200 dark:border-dark-400 pt-6 text-center">
-            <p className="text-xs text-muted">&copy; {new Date().getFullYear()} TetherNG. All rights reserved.</p>
+            <p className="text-xs text-gray-400 dark:text-muted">&copy; {new Date().getFullYear()} TetherNG. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -337,9 +340,9 @@ function ListingCard({ listing }: { listing: typeof FEATURED_LISTINGS[number] })
       </div>
       <div className="mt-4 px-1 pb-1">
         <h3 className="font-semibold text-gray-900 dark:text-white leading-snug line-clamp-2 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">{listing.title}</h3>
-        <p className="mt-1.5 text-sm text-muted">{listing.location}</p>
+        <p className="mt-1.5 text-sm text-gray-500 dark:text-muted">{listing.location}</p>
         <div className="mt-3 flex items-center justify-between">
-          <div className="flex items-center gap-3 text-xs text-muted">
+          <div className="flex items-center gap-3 text-xs text-gray-400 dark:text-muted">
             <span>{listing.beds} Bed{listing.beds > 1 ? 's' : ''}</span>
             <span className="h-1 w-1 rounded-full bg-gray-300 dark:bg-dark-400" />
             <span>{listing.baths} Bath{listing.baths > 1 ? 's' : ''}</span>
@@ -349,7 +352,7 @@ function ListingCard({ listing }: { listing: typeof FEATURED_LISTINGS[number] })
         {listing.agentVerified && (
           <div className="mt-3 flex items-center gap-1.5 border-t border-gray-100 dark:border-dark-400/50 pt-3">
             <div className="h-5 w-5 rounded-full bg-green-50 dark:bg-brand-500/20 flex items-center justify-center"><CheckCircle2 className="h-3 w-3 text-green-600 dark:text-success" /></div>
-            <span className="text-xs text-muted">Verified Agent</span>
+            <span className="text-xs text-gray-500 dark:text-muted">Verified Agent</span>
           </div>
         )}
       </div>
