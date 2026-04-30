@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Star, Rocket, Flame, ArrowRight, Eye, TrendingUp,
-  CheckCircle2, Shield, ArrowLeft, BarChart3, Crown,
+  CheckCircle2, Shield, BarChart3,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { LISTING_BOOST_OPTIONS } from '@/utils/constants';
-import { useAuthStore } from '@/store/authStore';
 import type { PropertyListing, ListingBoostType } from '@/types';
 
 /* ─── Mock agent listings for boost selection ─── */
@@ -17,6 +16,7 @@ const AGENT_LISTINGS: PropertyListing[] = [
     agentId: 'u2',
     agent: { id: 'u2', firstName: 'Adebayo', lastName: 'Ogundimu', avatarUrl: '', isVerified: false },
     title: '3-Bed Flat in Yaba — Newly Renovated',
+    description: '',
     propertyType: 'flat', listingType: 'rent',
     price: 1800000, priceLabel: 'per year',
     location: { state: 'Lagos', lga: 'Yaba', address: '24 Herbert Macaulay Way' },
@@ -32,6 +32,7 @@ const AGENT_LISTINGS: PropertyListing[] = [
     agentId: 'u2',
     agent: { id: 'u2', firstName: 'Adebayo', lastName: 'Ogundimu', avatarUrl: '', isVerified: false },
     title: 'Luxury 4-Bed Duplex — Lekki Phase 2',
+    description: '',
     propertyType: 'duplex', listingType: 'rent',
     price: 6500000, priceLabel: 'per year',
     location: { state: 'Lagos', lga: 'Lekki', address: '15 Admiralty Way' },
@@ -47,6 +48,7 @@ const AGENT_LISTINGS: PropertyListing[] = [
     agentId: 'u2',
     agent: { id: 'u2', firstName: 'Adebayo', lastName: 'Ogundimu', avatarUrl: '', isVerified: false },
     title: '2-Bedroom Apartment — Gwarinpa Estate',
+    description: '',
     propertyType: 'apartment', listingType: 'rent',
     price: 2800000, priceLabel: 'per year',
     location: { state: 'Abuja', lga: 'Gwarinpa', address: '18 GRA Phase 2' },
@@ -62,6 +64,7 @@ const AGENT_LISTINGS: PropertyListing[] = [
     agentId: 'u2',
     agent: { id: 'u2', firstName: 'Adebayo', lastName: 'Ogundimu', avatarUrl: '', isVerified: false },
     title: 'Commercial Office Space — Victoria Island',
+    description: '',
     propertyType: 'commercial', listingType: 'rent',
     price: 15000000, priceLabel: 'per year',
     location: { state: 'Lagos', lga: 'Lagos Island', address: '45 Adeola Odeku, VI' },
@@ -76,6 +79,7 @@ const AGENT_LISTINGS: PropertyListing[] = [
     agentId: 'u3',
     agent: { id: 'u3', firstName: 'Funke', lastName: 'Adesanya', avatarUrl: '', isVerified: true },
     title: '5-Bed Detached House — Maitama',
+    description: '',
     propertyType: 'house', listingType: 'rent',
     price: 25000000, priceLabel: 'per year',
     location: { state: 'Abuja', lga: 'Maitama', address: '3 Aso Drive' },
@@ -100,8 +104,6 @@ function getBoostedListing(listing: PropertyListing, boostType: ListingBoostType
 type BoostMode = 'select-listing' | 'select-boost' | 'confirm' | 'success';
 
 export default function BoostListingsPage() {
-  const navigate = useNavigate();
-  const { user } = useAuthStore();
   const [mode, setMode] = useState<BoostMode>('select-listing');
   const [selectedListingId, setSelectedListingId] = useState<string | null>(null);
   const [selectedBoost, setSelectedBoost] = useState<ListingBoostType>('none');
@@ -109,7 +111,6 @@ export default function BoostListingsPage() {
   const [boostedId, setBoostedId] = useState<string | null>(null);
 
   const selectedListing = AGENT_LISTINGS.find((l) => l.id === selectedListingId);
-  const boostOption = LISTING_BOOST_OPTIONS.find((b) => b.type === selectedBoost);
   const previewListing = selectedListing && selectedBoost !== 'none' ? getBoostedListing(selectedListing, selectedBoost) : selectedListing;
 
   const handleBoost = async () => {
@@ -233,10 +234,6 @@ export default function BoostListingsPage() {
           {LISTING_BOOST_OPTIONS.filter((b) => b.type !== 'none').map((option) => {
             const Icon = option.type === 'featured' ? Star : option.type === 'top_placement' ? Rocket : Flame;
             const isSelected = selectedBoost === option.type;
-            const previewWithBoost = isSelected && previewListing
-              ? getBoostedListing(previewListing, option.type)
-              : previewListing;
-            const viewMultiplier = option.type === 'featured' ? 5 : option.type === 'top_placement' ? 8 : 3;
 
             return (
               <button
@@ -283,31 +280,35 @@ export default function BoostListingsPage() {
           })}
 
           {/* Preview comparison */}
-          {selectedBoost !== 'none' && (
-            <div className="rounded-2xl border border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-100 p-5">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">Preview</h3>
-              <div className="flex items-center gap-6">
-                {/* Current */}
-                <div className="flex-1">
-                  <p className="text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1">Current</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedListing.viewsCount.toLocaleString()} views</p>
+          {selectedBoost !== 'none' && (() => {
+            const currentOption = LISTING_BOOST_OPTIONS.find(o => o.type === selectedBoost);
+            const multiplier = selectedBoost === 'featured' ? 5 : selectedBoost === 'top_placement' ? 8 : 3;
+            return (
+              <div className="rounded-2xl border border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-100 p-5">
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">Preview</h3>
+                <div className="flex items-center gap-6">
+                  {/* Current */}
+                  <div className="flex-1">
+                    <p className="text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1">Current</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedListing.viewsCount.toLocaleString()} views</p>
+                  </div>
+                  <div className="text-gray-300 dark:text-dark-500 text-2xl font-display">→</div>
+                  {/* Boosted */}
+                  <div className="flex-1">
+                    <p className="text-xs font-medium text-amber-700 dark:text-gold-400 uppercase tracking-wide mb-1">{currentOption?.label}</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">{(previewListing?.viewsCount || 0).toLocaleString()} views</p>
+                  </div>
                 </div>
-                <div className="text-gray-300 dark:text-dark-500 text-2xl font-display">→</div>
-                {/* Boosted */}
-                <div className="flex-1">
-                  <p className="text-xs font-medium text-amber-700 dark:text-gold-400 uppercase tracking-wide mb-1">{option.label}</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">{(previewListing?.viewsCount || 0).toLocaleString()} views</p>
+                <div className="mt-3 rounded-xl bg-brand-50 dark:bg-brand-500/5 border border-brand-200 dark:border-brand-500/20 p-4 text-center">
+                  <p className="text-sm font-bold text-brand-700 dark:text-brand-400">
+                    <span className="text-lg font-display">{multiplier}x</span>
+                    <span className="text-sm font-medium text-brand-600 dark:text-brand-400">more views</span>
+                  </p>
+                  <p className="text-xs text-muted mt-1">Based on average boost performance data</p>
                 </div>
               </div>
-              <div className="mt-3 rounded-xl bg-brand-50 dark:bg-brand-500/5 border border-brand-200 dark:border-brand-500/20 p-4 text-center">
-                <p className="text-sm font-bold text-brand-700 dark:text-brand-400">
-                  <span className="text-lg font-display">{viewMultiplier}x</span>
-                  <span className="text-sm font-medium text-brand-600 dark:text-brand-400">more views</span>
-                </p>
-                <p className="text-xs text-muted mt-1">Based on average boost performance data</p>
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* CTA */}
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -330,7 +331,7 @@ export default function BoostListingsPage() {
               ) : (
                 <>
                   <span className={selectedBoost === 'featured' ? '' : ''}>
-                    {LISTING_BOOST_OPTIONS.find(b => b.type === selectedBoost)?.label} — {formatCurrency(LISTING_BOOST_OPTIONS.find(b => b.type === selectedBoost)?.price || 0)}
+                    {LISTING_BOOST_OPTIONS.find(o => o.type === selectedBoost)?.label} — {formatCurrency(LISTING_BOOST_OPTIONS.find(o => o.type === selectedBoost)?.price || 0)}
                   </span>
                 </>
               )}
@@ -344,8 +345,8 @@ export default function BoostListingsPage() {
   /* ─── SUCCESS STATE ─── */
   if (mode === 'success') {
     const boostedListing = AGENT_LISTINGS.find((l) => l.id === boostedId);
-    const boostType = LISTING_BOOST_OPTIONS.find((b) => boostedListing?.boostType === 'boosted');
-    const preview = boostedListing ? getBoostedListing(boostedListing, boostedListing.boostType) : null;
+    const boostType = LISTING_BOOST_OPTIONS.find(opt => opt.type === boostedListing?.boostType);
+    const preview = boostedListing ? getBoostedListing(boostedListing, boostedListing?.boostType || 'none') : null;
 
     return (
       <div className="max-w-lg mx-auto py-16 text-center animate-fade-in">
@@ -381,7 +382,7 @@ export default function BoostListingsPage() {
                 <span className="text-muted">Boost type</span>
                 <span className={cn(
                   'text-xs font-bold',
-                  boostType === 'featured' ? 'text-amber-600 dark:text-gold-400' : 'text-gray-900 dark:text-white',
+                  boostType?.type === 'featured' ? 'text-amber-600 dark:text-gold-400' : 'text-gray-900 dark:text-white',
                 )}>
                   {boostType?.label}
                 </span>
