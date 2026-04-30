@@ -5,13 +5,12 @@ export default function RefundPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-dark">
       <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
-          <h1 className="section-heading">Refund Policy</h1>
+        <div className="text-center mb-16">
+          <h1 className="section-heading text-4xl md:text-5xl">Refund Policy</h1>
           <p className="text-muted mt-4">We want you to feel completely safe using TetherNG. If something goes wrong, we've got you covered.</p>
         </div>
 
         <div className="space-y-8">
-          {/* Trust Banner */}
           <div className="flex items-center gap-4 rounded-2xl border border-brand-200 dark:border-brand-500/20 bg-brand-50 dark:bg-brand-500/5 p-5">
             <Shield className="h-8 w-8 text-brand-600 dark:text-brand-400 shrink-0" />
             <div>
