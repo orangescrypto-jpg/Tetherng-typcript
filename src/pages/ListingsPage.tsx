@@ -2,13 +2,13 @@ import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Search, SlidersHorizontal, X, Star, Rocket, Flame,
-  CheckCircle2, MapPin, Eye, ChevronDown, Grid3X3, List,
+  CheckCircle2, MapPin, Eye, Grid3X3, List,
   Building2,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { formatCurrencyShort } from '@/utils/formatCurrency';
 import { NIGERIAN_STATES, PROPERTY_TYPES } from '@/utils/constants';
-import type { PropertyListing, ListingBoostType, PropertyType } from '@/types';
+import type { PropertyListing, ListingBoostType } from '@/types';
 
 /* ─── Mock Listings Data ─── */
 const ALL_LISTINGS: PropertyListing[] = [
