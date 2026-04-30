@@ -1,81 +1,79 @@
-import { Link } from 'react-router-dom';
+// eslint-disable @typescript-eslint/no-unused-vars
+import { Routes, Route } from 'react-router-dom';
+import ThemeInitializer from '@/components/layout/ThemeInitializer';
+import LandingPage from '@/pages/LandingPage';
+import ListingsPage from '@/pages/ListingsPage';
+import AuthLayout from '@/components/layout/AuthLayout';
+import DashboardLayout from '@/components/layout/DashboardLayout';
+import LoginPage from '@/pages/auth/LoginPage';
+import SignupPage from '@/pages/auth/SignupPage';
+import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
+import DashboardHome from '@/pages/dashboard/DashboardHome';
+import CreateListingPage from '@/pages/dashboard/CreateListingPage';
+import SubscriptionPage from '@/pages/dashboard/SubscriptionPage';
+import VerificationPage from '@/pages/dashboard/VerificationPage';
+import EscrowPage from '@/pages/dashboard/EscrowPage';
+import EscrowDetailPage from '@/pages/escrow/EscrowDetailPage';
+import SettingsPage from '@/pages/dashboard/SettingsPage';
+import BoostListingsPage from '@/pages/dashboard/BoostListingsPage';
+import AboutPage from '@/pages/AboutPage';
+import ContactPage from '@/pages/ContactPage';
+import PrivacyPage from '@/pages/PrivacyPage';
+import TermsPage from '@/pages/TermsPage';
+import RefundPage from '@/pages/RefundPage';
 
-const FOOTER_LINKS = [
-  {
-    title: 'Platform',
-    links: [
-      { label: 'Browse Listings', href: '/listings' },
-      { label: 'Pricing', href: '/pricing' },
-      { label: 'How It Works', href: '/#how-it-works' },
-      { label: 'Get Verified', href: '/dashboard/verification' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Contact', href: '/contact' },
-      { label: 'Careers', href: '/careers' },
-    ],
-  },
-  {
-    title: 'Legal',
-    links: [
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Refund Policy', href: '/refund' },
-    ],
-  },
-];
-
-export default function StaticPagesLayout() {
+function PlaceholderPage({ title }: { title: string }) {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-4 gap-12">
-          {/* Logo */}
-          <div>
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-600">
-                <Shield className="h-5 w-5 text-white" />
-              </div>
-              <span className="font-display text-xl font-bold text-gray-900 dark:text-white">
-                Tether<span className="text-brand-600 dark:text-brand-400">NG</span>
-              </span>
-            </Link>
-            <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-              Nigeria's most trusted property marketplace with secure escrow transactions.
-              No more scams, no more guesswork — just safe, transparent property deals.
-            </p>
-          </div>
-
-          {FOOTER_LINKS.map((section) => (
-            <div key={section.title}>
-              <h4 className="text-sm font-semibold text-gray-900 dark:text-white">{section.title}</h4>
-              <ul className="mt-4 flex flex-col gap-2.5">
-                {section.links.map((link) => (
-                  <li key={link.label} className="text-sm text-gray-500 dark:text-muted hover:text-gray-900 dark:hover:text-white transition-colors">
-                    <Link to={link.href}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-
-          {/* Bottom bar */}
-          <div className="border-t border-gray-200 dark:border-dark-400 pt-8">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <Link to="/" className="flex items-center gap-2.5">
-                <Shield className="h-4 w-4 text-brand-600 dark:text-brand-400" />
-                <span className="font-display text-lg font-bold text-gray-900 dark:text-white">
-                  Tether<span className="text-brand-600 dark:text-brand-400">NG</span>
-                </span>
-              </Link>
-              <p className="text-xs text-gray-400 dark:text-dark-400">&copy; {new Date().getFullYear()} TetherNG. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-col items-center justify-center py-20 text-center">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 dark:bg-dark-200 border border-gray-200 dark:border-dark-400">
+        <span className="text-2xl">🚧</span>
       </div>
+      <h1 className="mt-6 font-display text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
+      <p className="mt-2 text-sm text-muted">Coming soon</p>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <ThemeInitializer />
+      <Routes>
+        {/* Public */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/listings" element={<ListingsPage />} />
+        <Route path="/pricing" element={<SubscriptionPage />} />
+
+        {/* Auth */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        </Route>
+
+        {/* Dashboard */}
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardHome />} />
+          <Route path="/dashboard/listings" element={<PlaceholderPage title="My Listings" />} />
+          <Route path="/dashboard/listings/new" element={<CreateListingPage />} />
+          <Route path="/dashboard/saved" element={<PlaceholderPage title="Saved Properties" />} />
+          <Route path="/dashboard/escrow" element={<EscrowPage />} />
+          <Route path="/dashboard/escrow/:id" element={<EscrowDetailPage />} />
+          <Route path="/dashboard/messages" element={<PlaceholderPage title="Messages" />} />
+          <Route path="/dashboard/notifications" element={<PlaceholderPage title="Notifications" />} />
+          <Route path="/dashboard/subscription" element={<SubscriptionPage />} />
+          <Route path="/dashboard/verification" element={<VerificationPage />} />
+          <Route path="/dashboard/boost" element={<BoostListingsPage />} />
+          <Route path="/dashboard/settings" element={<SettingsPage />} />
+        </Route>
+
+        {/* Static pages */}
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/refund" element={<RefundPage />} />
+      </Routes>
+    </>
   );
 }
