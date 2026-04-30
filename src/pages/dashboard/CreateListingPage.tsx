@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, ArrowRight, CheckCircle2, Star,
-  Rocket, Flame, Eye, X, ImageIcon, Loader2, Shield,
+  Rocket, Flame, Eye, Film, ImageIcon, Loader2, Shield,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { formatCurrency } from '@/utils/formatCurrency';
