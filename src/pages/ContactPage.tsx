@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
   };
@@ -20,7 +20,6 @@ export default function ContactPage() {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12">
-          {/* Contact Info Cards */}
           <div className="lg:col-span-2 space-y-6">
             <div className="card p-6">
               <div className="flex items-start gap-4">
@@ -61,7 +60,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="lg:col-span-3">
             <div className="card p-8 h-full">
               {submitted ? (
@@ -70,8 +68,8 @@ export default function ContactPage() {
                     <Mail className="h-10 w-10 text-green-600 dark:text-success" />
                   </div>
                   <h2 className="Message Sent!</h2>
-                  <p className="text-muted mt-2">We'll get back to you as soon as possible.</p>
-                  <button onClick={() => setSubmitted(false)} className="btn-outline mt-6 text-sm">
+                  <p className="text-muted mt-2">We will get back to you as soon as possible.</p>
+                  <button onClick={() => setSubmitted(false)} className="btn-outline mt-6 text-sm px-6">
                     Send Another Message
                   </button>
                 </div>
@@ -95,7 +93,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <label className="mb-1.5 block text-sm font-medium text-gray-900 dark:text-white">Message</label>
-                      <textarea rows={6} placeholder="Tell us how we can help..." required className="input-field resize-none" />
+                      <textarea rows={6} placeholder="Tell us how we can help you..." required className="input-field resize-none" />
                     </div>
                     <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2">
                       Send Message <Send className="h-4 w-4" />
