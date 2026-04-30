@@ -13,11 +13,9 @@ import SubscriptionPage from '@/pages/dashboard/SubscriptionPage';
 import VerificationPage from '@/pages/dashboard/VerificationPage';
 import EscrowPage from '@/pages/dashboard/EscrowPage';
 import EscrowDetailPage from '@/pages/escrow/EscrowDetailPage';
-import MessagesPage from '@/pages/dashboard/MessagesPage';
-import NotificationsPage from '@/pages/NotificationsPage';
 import SettingsPage from '@/pages/dashboard/SettingsPage';
 import StaticPages from '@/pages/StaticPages';
-import BoostListingsPage from '@/pages/dashboard/BoostListingsPage'; // <-- Added missing import
+import BoostListingsPage from '@/pages/dashboard/BoostListingsPage';
 
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -56,8 +54,8 @@ export default function App() {
           <Route path="/dashboard/saved" element={<PlaceholderPage title="Saved Properties" />} />
           <Route path="/dashboard/escrow" element={<EscrowPage />} />
           <Route path="/dashboard/escrow/:id" element={<EscrowDetailPage />} />
-          <Route path="/dashboard/messages" element={<MessagesPage />} />
-          <Route path="/dashboard/notifications" element={<NotificationsPage />} />
+          <Route path="/dashboard/messages" element={<PlaceholderPage title="Messages" />} />
+          <Route path="/dashboard/notifications" element={<PlaceholderPage title="Notifications" />} />
           <Route path="/dashboard/subscription" element={<SubscriptionPage />} />
           <Route path="/dashboard/verification" element={<VerificationPage />} />
           <Route path="/dashboard/boost" element={<BoostListingsPage />} />
