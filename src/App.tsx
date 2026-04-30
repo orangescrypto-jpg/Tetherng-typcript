@@ -17,7 +17,7 @@ import EscrowDetailPage from '@/pages/escrow/EscrowDetailPage';
 import SettingsPage from '@/pages/dashboard/SettingsPage';
 import BoostListingsPage from '@/pages/dashboard/BoostListingsPage';
 import AboutPage from '@/pages/AboutPage';
-import ContactPage from '@/pages/ContactPage';        // ← FIXED: removed <PHONE>
+import ContactPage from '@/pages/ContactPage';
 import PrivacyPage from '@/pages/PrivacyPage';
 import TermsPage from '@/pages/TermsPage';
 import RefundPage from '@/pages/RefundPage';
