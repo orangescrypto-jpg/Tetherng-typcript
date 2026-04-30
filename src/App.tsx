@@ -14,8 +14,12 @@ import VerificationPage from '@/pages/dashboard/VerificationPage';
 import EscrowPage from '@/pages/dashboard/EscrowPage';
 import EscrowDetailPage from '@/pages/escrow/EscrowDetailPage';
 import SettingsPage from '@/pages/dashboard/SettingsPage';
-import StaticPages from '@/pages/StaticPages';
 import BoostListingsPage from '@/pages/dashboard/BoostListingsPage';
+import AboutPage from '@/pages/AboutPage';
+import ContactPage from '@/pages/ContactPage';
+import PrivacyPage from '@/pages/PrivacyPage';
+import TermsPage from '@/pages/TermsPage';
+import RefundPage from '@/pages/RefundPage';
 
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -63,11 +67,11 @@ export default function App() {
         </Route>
 
         {/* Static pages */}
-        <Route path="/about" element={<StaticPages />} />
-        <Route path="/contact" element={<StaticPages />} />
-        <Route path="/privacy" element={<StaticPages />} />
-        <Route path="/terms" element={<StaticPages />} />
-        <Route path="/refund" element={<StaticPages />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/refund" element={<RefundPage />} />
       </Routes>
     </>
   );
