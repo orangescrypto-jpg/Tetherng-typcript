@@ -1,213 +1,267 @@
-import { Link } from 'react-router-dom';
-import { Shield, Users, Lock, Eye, TrendingUp, Building2, Star } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Shield, Phone, Mail, MapPin, Send, Loader2, CheckCircle2, ArrowRight, AlertCircle } from 'lucide-react';
+import { cn } from '@/utils/cn';
 
-const STATS = [
-  { label: 'Active Listings', value: '12,400+', icon: Building2 },
-  { label: 'Verified Agents', value: '3,200+', icon: Users },
-  { label: 'Secured Transactions', value: '₦8.7B+', icon: Lock },
-  { label: 'Happy Clients', value: '9,100+', icon: TrendingUp },
-  { label: 'Nigerian States', value: '24 states', icon: Eye },
+const NIGERIAN_STATES = [
+  { value: '', label: 'Select state' },
+  { value: 'lagos', label: 'Lagos' },
+  { value: 'abuja', label: 'Abuja' },
+  { value: 'rivers', label: 'Port Harcourt' },
+  { value: 'oyo', label: 'Ibadan' },
+  { value: 'kano', label: 'Kano' },
+  { value: 'enugu', label: 'Enugu' },
+  { value: 'delta', label: 'Delta' },
 ];
 
-const TEAM = [
-  { name: 'Adewale Ogunwabi', role: 'Founder & CEO', image: 'https://i.pravatar.cc/seed/tetherng-ceo/80/80.jpg' },
-  { name: 'Chidinma Eze', role: 'CTO & Co-Founder', image: 'https://i.pravatar.cc/seed/tetherno-cto/80/80.jpg' },
-  { name: 'Blessing Udo', role: 'Head of Operations', image: 'https://i.pravatar.cc/seed/tetherng-ops/80/80.jpg' },
+const SUBJECT_OPTIONS = [
+  { value: 'general', label: 'General Inquiry' },
+  { value: 'listing', label: 'Listing Issue' },
+  { value: 'escrow', label: 'Escrow Issue' },
+  { value: 'verification', label: 'Verification Issue' },
+  { value: 'partnership', label: 'Partnership Inquiry' },
+  { value: 'complaint', label: 'File a Complaint' },
 ];
 
-const VALUES = [
-  { title: 'Transparency First', desc: 'Every transaction is visible to both parties in real-time. No hidden fees, no surprises.' },
-  { title: 'Nigerian-First', desc: 'Built for the Nigerian market with Naira-based pricing, BVN verification, and local agent networks.' },
-  { title: 'Security-First Architecture', desc: 'Bank-grade escrow infrastructure with encrypted data and regulated by Nigerian law.' },
-  { title: 'Agent Empowerment', desc: 'Tools that help agents close more deals with verified badges and priority ranking.' },
+const ISSUE_TYPES = [
+  { value: 'cant-find', label: "I can't find a property" },
+  { value: 'scam-suspect', label: 'I think this is a scam' },
+  { value: 'agent-unresponsive', label: 'Agent isn\'t responding' },
+  ];
 ];
 
-export default function AboutPage() {
+export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{ name: string; email: string; state: string; subject: string; message: string; issueType: string; description: string }>({
+    resolver: zod.object({
+      name: z.string().min(2, 'Name is required'),
+      email: z.string().email('Enter a valid email address'),
+      state: z.string().min(1, 'Select your state'),
+      subject: z.string().min(1, 'Select a subject'),
+      message: z.string().min(10, 'Tell us what you need help with (min 10 characters)'),
+      description: z.string().optional(),
+      issueType: z.string().optional(),
+    }),
+  });
+
+  const handleFormSubmit = async (data) => {
+    setSubmitted(true);
+    await new Promise((r) => setTimeout(r, 1500));
+    setSubmitted(false);
+    setSent(true);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-dark">
-      {/* Hero */}
+      {/* Header */}
       <section className="border-b border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/50 py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-            About Tether<span className="text-brand-600 dark:text-brand-400">NG</span>
-          </h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            We're building the trust layer Nigerian real estate has been missing — one escrow transaction at a time.
+        <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 dark:bg-brand-500/10 border border-2 border-brand-200 dark:border-brand-500/20">
+            <AlertCircle2 className="h-7 w-7 text-brand-600 dark:text-brand-400" />
+          </div>
+          <h1 className="font-display text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">Contact Us</h1>
+          <p className="mt-2 text-muted max-w-md mx-auto">
+            Have a question, issue, or partnership inquiry? We respond within 24 hours.
           </p>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="border-b border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/50 py-14">
-        <div className="mx-auto grid max-w-5xl grid grid-cols-2 sm:grid-cols-5 gap-6 px-4 sm:px-6 lg:px-8">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <stat.icon className="h-7 w-7 text-brand-600 dark:text-brand-400 mx-auto" />
-              <p className="mt-2 font-display text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">{stat.value}</p>
-              <p className="text-xs text-muted sm:text-sm">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Problem → Solution → Values → Team */}
+      {/* Contact form */}
       <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-heading">Why We Built TetherNG</h2>
-            <p className="mt-2 text-muted max-w-2xl mx-auto">
-              The problem was clear. Our approach is deliberate — solve the trust gap, not add more features.
-            </p>
-          </div>
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+            <div className="card p-6 sm:p-8">
+              {sent ? (
+                <div className="animate-fade-in text-center py-8">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-50 dark:bg-success/10 border-2 border-green-200 dark:border-success/20">
+                    <CheckCircle2 className="h-8 w-8 text-green-500 dark:text-success" />
+                  </div>
+                  <h2 className="Message Sent!</h2>
+                  <p className="text-sm text-muted mt-2">
+                    We received your message. We'll get back to you within 24 hours at <span className="text-brand-600 dark:text-brand-400">{data.email}</span>
+                  </p>
+                  <button
+                    onClick={() => { setSent(false); setSubmitted(false); }}
+                    className="btn-outline mt-6 inline-flex items-center gap-2"
+                  >
+                    Send Another Message
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit((data) => { handleFormSubmit(data); })}>
+                  {submitted ? (
+                    <div className="flex items-center justify-center py-12">
+                      <Loader2 className="h-8 w-8 text-brand-600 dark:text-brand-400 animate-spin" />
+                    <p className="text-sm text-muted mt-3">Sending...</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-5">
+                      <div>
+                        <label className="mb-1.5 block text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
+                        <input
+                          type="text"
+                          placeholder="Your full name"
+                          className={cn('input-field', errors.name && 'border-red-500 dark:border-danger focus:border-red-500 dark:focus:border-danger focus:ring-red-500/50'}
+                          {...register('name')}
+                        />
+                        {errors.name && <p className="mt-1 text-xs text-red-600 dark:text-danger">{errors.name.message}</p>}
+                      </div>
 
-          {/* Problem → Solution */}
-          <div className="space-y-8">
-            <div className="card-hover flex gap-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-50 dark:bg-danger/5 border border-red-200 dark:border-danger/20">
-                <span className="font-display text-3xl font-black text-red-500 dark:text-danger">!</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white">The Problem</h3>
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  70% of Nigerian renters have lost money to fake property listings. Agents can't prove they're legitimate. The market has zero trust.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <ArrowRight className="h-8 w-8 text-gray-300 dark:text-dark-500" />
-            </div>
-            <div className="card-hover flex gap-5">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 dark:bg-brand-500/10 border border-brand-200 dark:border-brand-500/20">
-                <Shield className="h-6 w-6 text-brand-600 dark:text-brand-400" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Our Solution</h3>
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  Escrow that holds funds. Verification that proves identity. A dispute system when things go wrong. Transparency that builds confidence.
-                </p>
-              </div>
-            </div>
-          </div>
+                      <div>
+                        <label className="mb-1.5 block text-sm font-medium text-gray-900 dark:text-white">Email Address</label>
+                        <input
+                          type="email"
+                          placeholder="you@example.com"
+                          className={cn('input-field', errors.email && 'border-red-500 dark:border-danger focus:border-red-500 dark:focus:border-danger focus:ring-red-500/50'}
+                          {...register('email')}
+                        />
+                        {errors.email && <p className="mt-1 text-xs text-red-600 dark:text-danger">{errors.email.message}</p>}
+                      </div>
 
-          {/* Values */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {VALUES.map((item) => (
-              <div key={item.title} className="card-hover flex gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 dark:bg-brand-500/10 border border-brand-200 dark:border-brand-500/20">
+                      <div>
+                        <label className="mb-1.5 block text-sm font-medium text-gray-900 dark:text-white">State</label>
+                        <select
+                          className={cn('input-field appearance-none pr-10', errors.state && 'border-red-500 dark:border-danger'}
+                          {...register('state')}
+                        >
+                          <option value="">Select your state</option>
+                            {NIGERIAN_STATES.map((s) => (
+                              <option key={s.value} value={s.value}>{s.label}</option>
+                            ))}
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-muted" />
+                        />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="mb-1.5 block text-sm font-medium text-gray-900 dark:text-white">Subject</label>
+                        <select
+                          className={cn('input-field appearance-none pr-10', errors.subject && 'border-red-500 dark:border-danger'}
+                          {...register('subject')}
+                        >
+                          <option value="">Select a subject</option>
+                          {SUBJECT_OPTIONS.map((s) => (
+                            <option key={s.value} value={s.value}>{s.label}</option>
+                          </option>
+                        >
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-muted" />
+                        </div>
+                      </div>
+
+                      {/* Issue type (only shows if subject is "Listing Issue" or "Escrow Issue" or "Verification Issue") */}
+                      {(data.subject === 'listing-issue' || data.subject === 'escrow-issue' || data.subject === 'verification-issue') && (
+                        <div>
+                          <label className="mb-1.5 block text-sm font-medium text-gray-900 dark:text-white">What type of issue?</label>
+                          <select
+                            className={cn('input-field appearance-none pr-10', errors.issueType && 'border-red-500 dark:border-danger'}
+                            {...register('issueType')}
+                          >
+                            <option value="">Select issue type</option>
+                            {ISSUE_TYPES.map((t) => (
+                              <option key={t.value} value={t.value}>{t.label}</option>
+                            ))}
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-muted" />
+                        </div>
+                      )}
+
+                      <div>
+                        <label className="mb-1.5 block text-sm font-medium text-gray-900 dark:text-white">Message</label>
+                        <textarea
+                          placeholder="Describe your issue in detail. Include property link if applicable."
+                          rows={5}
+                          className={cn('input-field resize-none', errors.message && 'border-red-500 dark:border-danger focus:border-red-500 dark:focus:ring-red-500/50'}
+                          {...register('message')}
+                        />
+                        {errors.message && <p className="mt-1 text-xs text-red-600 dark:text-danger">{errors.message.message}</p>}
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={submitted}
+                        className="btn-primary w-full mt-2 py-3 text-base"
+                      >
+                        {submitted ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <>
+                            Send Message <ArrowRight className="h-4 w-4" />
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  )}
+              )}
+            </div>
+
+            {/* Contact sidebar info */}
+            <div className="mt-8 grid sm:grid-cols-3 gap-4">
+              <div className="card-hover">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 dark:bg-brand-500/10 border border-brand-200 dark:border-brand-500/20">
                   <Shield className="h-5 w-5 text-brand-600 dark:text-brand-400" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">{item.title}</h3>
-                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{item.desc}</p>
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">Email Us</h3>
+                  <a href="mailto:hello@tether.ng" className="text-sm text-brand-600 dark:text-brand-400 hover:underline mt-1 inline-block">
+                    hello@tether.ng
+                  </a>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="border-t border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/30 py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <span className="badge-verified mb-3 inline-flex"><CheckCircle2 className="h-3 w-3" /> Backed by real people</span>
-            <h2 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Our Team</h2>
-          </div>
-
-          <div className="grid sm:grid-cols-3 gap-6">
-            {TEAM.map((member) => (
-              <div key={member.name} className="card-hover text-center">
-                <img src={member.image} alt={member.name} className="mx-auto h-20 w-20 rounded-2xl object-cover border-2 border-gray-200 dark:border-dark-400 mb-4" />
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white">{member.name}</h3>
-                <p className="text-xs font-semibold text-brand-600 dark:text-brand-400 mt-0.5">{member.role}</p>
+              <div className="card-hover">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-200 border border-gray-200 dark:border-dark-400">
+                  <Phone className="h-5 w-5 text-gray-400 dark:text-muted" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">Call Us</h3>
+                  <a href="tel:+2348012345678" className="text-sm text-brand-600 dark:text-brand-400 hover:underline mt-1 inline-flex items-center gap-1">
+                    +234 801 234 5678
+                  </a>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="border-t border-gray-200 dark:border-dark-400 bg-gray-50 dark:bg-dark/30 py-16 sm:py-24">
-        <div className="mx-auto max-w-3xl text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="section-heading">Join the Mission</h2>
-          <p className="mt-2 text-muted max-w-xl mx-auto">
-            Whether you're a tenant looking for safety or an agent looking for more leads — TetherNG has a spot for you.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/signup" className="btn-primary px-8 py-3.5 text-base">
-              Get Started <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link to="/pricing" className="btn-gold px-8 py-3.5 text-base">
-              View Plans <Star className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section className="border-t border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/30 py-16 sm:py-24">
-        <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
-          <h2 className="text-2xl font-display font-bold text-gray-900 dark:text-white">Contact Us</h2>
-          <p className="mt-2 text-muted">Have a question or partnership inquiry? Reach out — we respond within 24 hours.</p>
-        </div>
-
-        <div className="mx-auto max-w-2xl mt-10 space-y-4">
-          <div className="card-hover flex items-center gap-4 p-5">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 dark:bg-brand-500/10 border border-brand-200 dark:border-brand-500/20">
-              <Shield className="h-6 w-6 text-brand-600 dark:text-brand-400" />
+              <div className="card-hover">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-200 border border-gray-200 dark:border-dark-400">
+                  <MapPin className="h-5 w-5 text-gray-400 dark:text-muted" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">Visit Us</h3>
+                  <p className="text-xs text-muted mt-0.5">Lagos, Nigeria</p>
+                </div>
+              </div>
             </div>
-            <div className="text-left flex-1">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white">Email</h3>
-              <a href="mailto:hello@tether.ng" className="text-sm text-brand-600 dark:text-brand-400 hover:underline mt-1 inline-block">
-                hello@tether.ng
+
+            {/* WhatsApp CTA */}
+            <div className="mt-6 rounded-2xl border border-green-200 dark:border-success/20 bg-green-50/30 dark:bg-success/5 p-6 text-center">
+              <div className="flex items-center justify-center mx-auto mb-3">
+                <div className="h-10 w-10 items-center justify-center rounded-full bg-green-500">
+                  <svg className="h-5 w-5 text-white" viewBox="0 24 24" fill="#25D366" />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Chat on WhatsApp</h3>
+              <p className="text-sm text-muted mt-1">For faster response</p>
+              <a
+                href="https://wa.me/2348012345678"
+                className="btn-primary mt-4 inline-flex items-center gap-2 px-8 py-3 text-base"
+                target="_blank"
+              >
+                Open Chat <ArrowRight className="h-4 w-4" />
               </a>
             </div>
-          </div>
-
-          <div className="card-hover flex items-center gap-4 p-5">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-200 border border-gray-200 dark:border-dark-400">
-              <Phone className="h-6 w-6 text-gray-500 dark:text-muted" />
-            </div>
-            <div className="text-left flex-1">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white">Phone</h3>
-              <a href="tel:+2348012345678" className="text-sm text-brand-600 dark:text-brand-400 hover:underline mt-1 inline-block">
-                +234 801 234 5678
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social proof */}
-      <section className="py-16 sm:py-24 bg-gray-50 dark:bg-dark/30">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <span className="badge-verified mb-3 inline-flex"><CheckCircle2 className="h-3 w-3" /> Trusted by thousands</span>
-            <h2 className="text-2xl font-display font-bold text-gray-900 dark:text-white sm:text-3xl">
-              Backed by real users
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {[
-              { icon: '👤', label: 'Active Users', value: '2,847', color: 'text-brand-600 dark:text-brand-400' },
-              { icon: '🏠', label: 'Properties', value: '12,400+', color: 'text-gold-400' },
-              { icon: '🔒', label: 'Escrow Transactions', value: '4,312', color: 'text-brand-600 dark:text-brand-400' },
-              { icon: '⭐', label: '5-Star Reviews', value: '1,847', color: 'text-amber-500' },
-            ].map((item) => (
-              <div key={item.label} className="card-hover text-center p-5">
-                <p className="font-display text-2xl font-black text-gray-900 dark:text-white">{item.value}</p>
-                <p className="text-xs text-muted mt-0.5">{item.label}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <div className="border-t border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/30 py-12">
+      <div className="border-t border-gray-200 dark:border-dark-400 bg-gray-50 dark:bg-dark-30 py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-gray-100 dark:border-dark-400 pb-4 mb-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between border-b border-gray-100 dark:border-dark-400 pb-4 mb-8">
             <Link to="/" className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600">
                 <Shield className="h-4 w-4 text-white" />
@@ -216,7 +270,7 @@ export default function AboutPage() {
                 Tether<span className="text-brand-600 dark:text-brand-400">NG</span>
               </span>
             </Link>
-            <p className="text-xs text-gray-400 dark:text-dark-500">© {new Date().getFullYear()} TetherNG. All rights reserved.</p>
+            <p className="text-xs text-gray-400 dark:text-dark-500">&copy; {new Date().getFullYear()} TetherNG. All rights reserved.</p>
           </div>
         </div>
       </section>
