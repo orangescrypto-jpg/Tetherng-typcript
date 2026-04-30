@@ -17,7 +17,7 @@ import EscrowDetailPage from '@/pages/escrow/EscrowDetailPage';
 import SettingsPage from '@/pages/dashboard/SettingsPage';
 import BoostListingsPage from '@/pages/dashboard/BoostListingsPage';
 import AboutPage from '@/pages/AboutPage';
-import ContactPage from '@/pages/<PHONE>ContactPage';
+import ContactPage from '@/pages/ContactPage';        // ← FIXED: removed <PHONE>
 import PrivacyPage from '@/pages/PrivacyPage';
 import TermsPage from '@/pages/TermsPage';
 import RefundPage from '@/pages/RefundPage';
@@ -25,7 +25,7 @@ import RefundPage from '@/pages/RefundPage';
 function PlaceholderPage({ title }: { title: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="flex h-16 w-16 w-16 items-center justify-center rounded-2xl bg-gray-100 dark:bg-dark-200 border border-gray-200 dark:border-dark-400">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 dark:bg-dark-200 border border-gray-200 dark:border-dark-400">
         <span className="text-2xl">🚧</span>
       </div>
       <h1 className="mt-6 font-display text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
