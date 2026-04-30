@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Shield, Users, Lock, FileText, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 const FOOTER_LINKS = [
   {
