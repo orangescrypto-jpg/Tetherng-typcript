@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-dark">
@@ -26,7 +24,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">4. Escrow Transactions</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">4. Escrow Transactions</h2>
             <p>TetherNG acts as an intermediary holding funds in escrow until predefined conditions are met. We are not a party to the underlying transaction between the tenant and the agent. Release of funds is strictly based on explicit user confirmation. Misuse of the escrow system will result in a permanent ban.</p>
           </section>
 
