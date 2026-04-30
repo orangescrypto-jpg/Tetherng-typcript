@@ -32,6 +32,7 @@ const MOCK_ESCROW = {
   depositPaidAt: '2024-10-20T10:30:00',
   fundsHeldAt: '2024-10-20T10:31:00',
   inspectionDate: '2024-10-27',
+  releasedAt: '', // Added missing property
   createdAt: '2024-10-20T10:00:00',
   updatedAt: '2024-10-20T10:31:00',
 };
@@ -47,9 +48,9 @@ const STEPS = [
 const STEP_ORDER: EscrowStep[] = ['initiated', 'deposit', 'held', 'inspection', 'released'];
 
 export default function EscrowDetailPage() {
-  const { id } = useParams();
+  useParams();
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  useAuthStore();
   const [activeImage, setActiveImage] = useState(0);
   const [confirmAction, setConfirmAction] = useState<'confirm' | 'dispute' | 'release' | null>(null);
   const [processing, setProcessing] = useState(false);
@@ -60,7 +61,7 @@ export default function EscrowDetailPage() {
   const stepIndex = STEP_ORDER.indexOf(escrow.currentStep);
   const isActive = ['deposit', 'held', 'inspection'].includes(escrow.currentStep);
 
-  const handleAction = async (action: 'confirm' | 'dispute' | 'release') => {
+  const handleAction = async () => {
     setProcessing(true);
     await new Promise((r) => setTimeout(r, 1500));
     setProcessing(false);
@@ -238,7 +239,6 @@ export default function EscrowDetailPage() {
               {STEPS.map((step, i) => {
                 const isCompleted = i < stepIndex;
                 const isCurrent = step.key === escrow.currentStep;
-                const isPending = i > stepIndex;
 
                 let borderColor = 'border-gray-200 dark:border-dark-300';
                 let bgColor = 'bg-gray-50 dark:bg-dark-200/50';
@@ -391,7 +391,7 @@ export default function EscrowDetailPage() {
                 </p>
                 <div className="mt-5 flex gap-3">
                   <button onClick={() => setConfirmAction(null)} className="btn-outline flex-1 py-2.5 text-sm">Cancel</button>
-                  <button onClick={() => handleAction('confirm')} disabled={processing} className="bg-green-600 hover:bg-green-500 flex-1 py-2.5 text-sm font-bold text-white rounded-xl transition-all disabled:opacity-50">
+                  <button onClick={() => handleAction()} disabled={processing} className="bg-green-600 hover:bg-green-500 flex-1 py-2.5 text-sm font-bold text-white rounded-xl transition-all disabled:opacity-50">
                     {processing ? <Loader2 className="h-4 w-4 animate-spin inline" /> : 'Confirm Release'}
                   </button>
                 </div>
@@ -410,7 +410,7 @@ export default function EscrowDetailPage() {
                 </p>
                 <div className="mt-5 flex gap-3">
                   <button onClick={() => setConfirmAction(null)} className="btn-outline flex-1 py-2.5 text-sm">Cancel</button>
-                  <button onClick={() => handleAction('dispute')} disabled={processing} className="bg-red-600 hover:bg-red-500 flex-1 py-2.5 text-sm font-bold text-white rounded-xl transition-all disabled:opacity-50">
+                  <button onClick={() => handleAction()} disabled={processing} className="bg-red-600 hover:bg-red-500 flex-1 py-2.5 text-sm font-bold text-white rounded-xl transition-all disabled:opacity-50">
                     {processing ? <Loader2 className="h-4 w-4 animate-spin inline" /> : 'Submit Dispute'}
                   </button>
                 </div>
@@ -430,7 +430,7 @@ export default function EscrowDetailPage() {
                 </p>
                 <div className="mt-5 flex gap-3">
                   <button onClick={() => setConfirmAction(null)} className="btn-outline flex-1 py-2.5 text-sm">Cancel</button>
-                  <button onClick={() => handleAction('release')} disabled={processing} className="bg-green-600 hover:bg-green-500 flex-1 py-2.5 text-sm font-bold text-white rounded-xl transition-all disabled:opacity-50">
+                  <button onClick={() => handleAction()} disabled={processing} className="bg-green-600 hover:bg-green-500 flex-1 py-2.5 text-sm font-bold text-white rounded-xl transition-all disabled:opacity-50">
                     {processing ? <Loader2 className="h-4 w-4 animate-spin inline" /> : 'Release Now'}
                   </button>
                 </div>
