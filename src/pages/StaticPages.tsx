@@ -24,7 +24,7 @@ const FOOTER_LINKS = [
     links: [
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },
-      { label: 'Refund Policy', href: '/refund' }, // Fixed missing quote here
+      { label: 'Refund Policy', href: '/refund' },
     ],
   },
 ];
@@ -61,7 +61,7 @@ export default function StaticPagesLayout() {
                 ))}
               </ul>
             </div>
-          ))} {/* Fixed: Removed extra </div> here */}
+          ))}
 
           {/* Bottom bar */}
           <div className="border-t border-gray-200 dark:border-dark-400 pt-8">
@@ -77,6 +77,6 @@ export default function StaticPagesLayout() {
           </div>
         </div>
       </div>
-    </div> {/* Fixed: Removed extra </div> at the very end */}
+    </div>
   );
 }
