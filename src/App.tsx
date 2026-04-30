@@ -17,6 +17,7 @@ import MessagesPage from '@/pages/dashboard/MessagesPage';
 import NotificationsPage from '@/pages/NotificationsPage';
 import SettingsPage from '@/pages/dashboard/SettingsPage';
 import StaticPages from '@/pages/StaticPages';
+import BoostListingsPage from '@/pages/dashboard/BoostListingsPage'; // <-- Added missing import
 
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -71,6 +72,5 @@ export default function App() {
         <Route path="/refund" element={<StaticPages />} />
       </Routes>
     </>
-  />
   );
 }
