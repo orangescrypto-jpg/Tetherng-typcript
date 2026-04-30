@@ -9,7 +9,6 @@ import { cn } from '@/utils/cn';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { VERIFICATION_PRICES } from '@/utils/constants';
 import { useAuthStore } from '@/store/authStore';
-import type { VerificationStatus } from '@/types';
 
 type Step = 'intro' | 'pay' | 'upload' | 'submitted' | 'approved' | 'rejected';
 
