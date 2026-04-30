@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
   };
@@ -54,7 +54,9 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">Office</h3>
-                  <p className="text-sm text-muted mt-1">45 Admiralty Way, Victoria Island,<br />Lagos, Nigeria.</p>
+                  <p className="text-sm text-muted mt-1">
+                    45 Admiralty Way, Victoria Island,<br />Lagos, Nigeria.
+                  </p>
                 </div>
               </div>
             </div>
@@ -67,7 +69,9 @@ export default function ContactPage() {
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-50 dark:bg-success/10 border-2 border-green-200 dark:border-success/20 mb-6">
                     <Mail className="h-10 w-10 text-green-600 dark:text-success" />
                   </div>
-                  <h2 className="Message Sent!</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Message Sent!
+                  </h2>
                   <p className="text-muted mt-2">We will get back to you as soon as possible.</p>
                   <button onClick={() => setSubmitted(false)} className="btn-outline mt-6 text-sm px-6">
                     Send Another Message
