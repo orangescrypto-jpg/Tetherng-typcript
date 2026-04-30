@@ -38,22 +38,18 @@ export default function HowItWorksPage() {
       <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="section-heading text-4xl md:text-5xl">How It Works</h1>
-          <p className="Transact with confidence in 4 simple steps. TetherNG holds your money securely until you are completely satisfied.</p>
+          <p className="text-muted mt-4">Transact with confidence in 4 simple steps. TetherNG holds your money securely until you are completely satisfied.</p>
         </div>
 
         <div className="relative">
-          {/* Connecting Line (Desktop only) */}
           <div className="absolute left-1/2 top-10 bottom-0 w-px bg-gray-300 dark:bg-dark-400 hidden sm:block" />
 
           <div className="space-y-12">
             {steps.map((step) => (
               <div key={step.num} className="relative flex gap-6">
-                {/* Step Number */}
                 <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 ${step.color}`}>
                   <step.icon className="h-6 w-6" />
                 </div>
-                
-                {/* Content Card */}
                 <div className="flex-1 bg-white dark:bg-dark-100 border border-gray-200 dark:border-dark-400 rounded-2xl p-6 shadow-sm hover:shadow-card-hover transition-all">
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">{step.title}</h3>
                   <p className="text-sm text-muted mt-2 leading-relaxed">{step.description}</p>
@@ -63,7 +59,6 @@ export default function HowItWorksPage() {
           </div>
         </div>
 
-        {/* Bottom CTA */}
         <div className="text-center mt-16">
           <p className="text-lg text-muted mb-6">Ready to get started?</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
