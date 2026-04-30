@@ -293,4 +293,146 @@ const SECTIONS = [
       title: '13. Your rights under NDPR',
     },
     {
-      'label: 'Access
+      'label: 'Access', desc: 'View, edit, or delete your data anytime' },
+      { label: 'Modify', desc: 'Update your profile, listing, or settings' },
+      { label: 'Delete', desc: 'Remove your account permanently' },
+      { label: 'Portability', desc: 'Export data in standard formats for free' },
+      { label: 'No hidden charges', desc: 'No hidden fees anywhere' },
+    },
+    },
+    },
+    {
+      'title: '14. Data processors',
+    },
+    },
+    {
+      'label: 'Google (Auth)', desc: 'Used for sign-in only — no data stored' },
+      { label: 'Cloudinary (Cloudinary)', desc: 'Image and video hosting only — metadata in Firestore' },
+      { label: 'Vercel (Hosting)', desc: 'App hosting — we use Vercel' },
+      { label: 'Mapbox (Maps)', desc: 'Location services only — no personal data stored' },
+      { label: 'NIBSS', desc: 'BVN check only — no data stored' },
+    },
+    },
+    {
+      'title: '15. Contact our support',
+    },
+    },
+    {
+      'label: 'Email: hello@tether.ng',
+        desc: 'hello@tether.ng or DM @TetherNG on WhatsApp for faster support.',
+      },
+      { label: 'WhatsApp: @TetherNG', desc: 'Quick answers on WhatsApp' },
+    },
+    },
+    {
+      'title: '16. Updates to this policy',
+    },
+    {
+      'label: 'Continuous updates', desc: 'Policy updated quarterly with clear change summaries' },
+      { label: 'Email notification', desc: 'For major changes to this section' },
+      { label: 'Version', desc: 'v1.0 — Published January 2025' },
+      { label: 'Full document', desc: 'Full policy document available to download below' },
+    },
+    },
+    },
+    {
+      'title: '17. Contact DPA',
+    },
+    },
+    },
+    {
+      'label: 'Data Protection Impact',
+    },
+    },
+    },
+    },
+    {
+      'title: '18. Mobile app',
+    },
+    },
+    },
+    },
+    },
+    },
+    },
+    },
+    },
+    },
+  };
+
+  const SECTION_ORDER = ['Acceptance', 'Listings', 'Payments', 'Escrow', 'Verification', 'Content Rules', 'Subscriptions', 'Content Rules', 'Refund Policy', 'Data Retention', 'Intellectual Property', 'Contact DPA', 'Processors', 'Updates', 'Mobile App'],
+  };
+
+  export default function TermsPage() {
+    return (
+    <div className="min-h-screen bg-gray-50 dark:bg-dark">
+      {/* Header */}
+      <section className="border-b border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/50 py-16 sm:py-24">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <h1 className="font-display text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
+            Terms of Service
+          </h1>
+          <p className="mt-2 text-sm text-muted max-w-md mx-auto">
+            Last updated: January 2025
+          </p>
+        </div>
+      </section>
+
+      {/* Content */}
+      {SECTION_ORDER.map((section, i) => (
+        <section key={i} className={i < SECTION_ORDER.length - 1 && 'border-b border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/30 py-14 sm:py-20'>
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white">{section.title}</h2>
+            <ul className="mt-4 space-y-2.5">
+              {section.items.map((item) => (
+                <li key={item.label} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-400">
+                  <span className="text-gray-400 dark:text-dark-500 shrink-0 mt-0.5">•</span>
+                  <span className="text-gray-700 dark:text-gray-300">{item.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Download link */}
+      <section className="border-t border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-50/50 py-10">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <p className="text-sm text-muted max-w-md mx-auto">
+            Download the complete document below as a PDF for your records.
+          </p>
+          <button
+            className="btn-outline mt-6 inline-flex items-center gap-2 px-8 py-3 text-sm"
+            onClick={() => {
+              // In production: import the actual PDF from /public/terms.pdf
+              window.open('/terms.pdf');
+            }}
+          >
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-white transition-colors mt-1.5 inline-flex items-center gap-1.5">
+              <Download PDF <ArrowRight className="h-3.5 w-3.5" />
+            </span>
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <div className="border-t border-gray-200 dark:border-dark-400 bg-gray-50 dark:bg-dark-30 py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between border-b border-gray-100 dark:border-dark-400 pb-4 mb-8">
+            <Link to="/" className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600">
+                <Shield className="h-4 w-4 text-white" />
+              </div>
+              <span className="font-display text-lg font-bold text-gray-900 dark:text-white">
+                Tether<span className="text-brand-600 dark:text-brand-400">NG</span>
+              </span>
+            </Link>
+            <p className="text-xs text-gray-400 dark:text-dark-500">&copy; {new Date().getFullYear()} TetherNG. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  );
+}
