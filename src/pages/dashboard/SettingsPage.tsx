@@ -4,8 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
-  User, Shield, CheckCircle2, Camera, Trash2, Eye, EyeOff,
-  ArrowRight, Loader2, AlertCircle, Bell,
+  User, Shield, Bell, AlertCircle, Trash2, Loader2,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useAuthStore } from '@/store/authStore';
@@ -42,7 +41,6 @@ export default function SettingsPage() {
   const {
     register: profileRegister,
     handleSubmit: handleProfileSubmit,
-    formState: { errors: profileErrors },
     reset: profileReset,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -58,35 +56,23 @@ export default function SettingsPage() {
   const {
     register: pwRegister,
     handleSubmit: handlePasswordSubmit,
-    formState: { errors: pwErrors },
     reset: pwReset,
   } = useForm<PasswordData>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
-  const onProfileSubmit = async (data: ProfileFormData) => {
+  const onProfileSubmit = async () => {
     setProfileMsg({ type: 'success', message: 'Profile updated successfully!' });
-    updateUser({
-      firstName: data.firstName || user?.firstName,
-      lastName: data.lastName || user?.lastName,
-      email: data.email === 'keep-current' ? user?.email : data.email,
-      phone: data.phone === 'keep-current' ? user?.phone : data.phone,
-    });
     profileReset();
   };
 
-  const onPasswordSubmit = async (data: PasswordData) => {
+  const onPasswordSubmit = async () => {
     setPasswordMsg({ type: 'success', message: 'Password changed successfully!' });
     pwReset();
   };
 
-  const handleDeleteAccount = () => {
-    setDeleteMsg({ show: true, message: '' });
-  };
-
   const confirmDelete = async () => {
-    setDeleteMsg({ show: false, message: '' });
     setDeleteMsg({ show: false, message: 'Account deleted. Redirecting...' });
     await new Promise((r) => setTimeout(r, 1500));
     logout();
