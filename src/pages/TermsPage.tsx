@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, XCircle, FileText, Shield } from 'lucide-react';
+import { ArrowLeft, XCircle, FileText, Shield } from 'lucide-react';
 
 export default function TermsPage() {
   return (
