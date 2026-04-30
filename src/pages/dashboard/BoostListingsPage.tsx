@@ -135,11 +135,11 @@ export default function BoostListingsPage() {
           </div>
         </div>
 
-        {boostedListListings.length > 0 && (
+        {boostedListings.length > 0 && (
           <div className="rounded-2xl border border-amber-200 dark:border-gold-400/20 bg-amber-50 dark:bg-gold-400/5 p-4 flex items-center gap-3">
             <TrendingUp className="h-5 w-5 text-amber-600 dark:text-gold-400" />
             <div>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white">{boostedListings.length} listing{boostedListListings.length !== 1 ? 's already boosted' : ' is boosted'} — getting {boostedListings.reduce((sum, l) => sum + (l.boostType === 'featured' ? 5 : 3)}x more views combined</p>
+              <p className="text-sm font-semibold text-gray-900 dark:text-white">{boostedListings.length} listing{boostedListings.length !== 1 ? 's already boosted' : ' is boosted'} — getting {boostedListings.reduce((sum, l) => sum + (l.boostType === 'featured' ? 5 : 3), 0)}x more views combined</p>
             </div>
           </div>
         )}
@@ -213,18 +213,18 @@ export default function BoostListingsPage() {
         {/* Property mini card */}
         <div className="listing-pinned p-3">
           <div className="relative aspect-[16/8] overflow-hidden rounded-xl -mx-3 -mt-8">
-            <img src={previewListing.images[0]} alt="" className="h-full w-full object-cover" />
+            <img src={previewListing?.images[0]} alt="" className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
             <div className="absolute bottom-2 left-3">
               <span className="rounded-lg bg-black/60 backdrop-blur-sm px-2.5 py-1 text-xs font-bold text-white">
-                {formatCurrency(previewListing.price)}
+                {formatCurrency(previewListing?.price || 0)}
               </span>
             </div>
           </div>
 
           <div className="px-1 pb-1">
             <h2 className="font-display text-xl font-bold text-gray-900 dark:text-white">Boost: {LISTING_BOOST_OPTIONS.find((b) => b.type === selectedBoost)?.label}</h2>
-            <p className="mt-1 text-sm text-muted">{previewListing.location.lga}, {previewListing.location.state}</p>
+            <p className="mt-1 text-sm text-muted">{previewListing?.location.lga}, {previewListing?.location.state}</p>
           </div>
         </div>
 
@@ -233,7 +233,7 @@ export default function BoostListingsPage() {
           {LISTING_BOOST_OPTIONS.filter((b) => b.type !== 'none').map((option) => {
             const Icon = option.type === 'featured' ? Star : option.type === 'top_placement' ? Rocket : Flame;
             const isSelected = selectedBoost === option.type;
-            const previewWithBoost = selected && previewListing
+            const previewWithBoost = isSelected && previewListing
               ? getBoostedListing(previewListing, option.type)
               : previewListing;
             const viewMultiplier = option.type === 'featured' ? 5 : option.type === 'top_placement' ? 8 : 3;
@@ -263,7 +263,7 @@ export default function BoostListingsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className={cn('text-sm font-bold', isSelected ? 'text-brand-700 dark:text-brand-400' : 'text-gray-900 dark:text-white'}>
+                    <h3 className={cn('text-sm font-bold', isSelected ? 'text-brand-700 dark:text-brand-400' : 'text-gray-900 dark:text-white')}>
                       {option.label}
                     </h3>
                     <span className={cn(
@@ -290,13 +290,13 @@ export default function BoostListingsPage() {
                 {/* Current */}
                 <div className="flex-1">
                   <p className="text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-1">Current</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">{listing.viewsCount.toLocaleString()} views</p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedListing.viewsCount.toLocaleString()} views</p>
                 </div>
                 <div className="text-gray-300 dark:text-dark-500 text-2xl font-display">→</div>
                 {/* Boosted */}
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-amber-700 dark:text-gold-400 uppercase tracking-wide mb-1">{selectedBoost.label}</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">{(previewListing.viewsCount).toLocaleString()} views</p>
+                  <p className="text-xs font-medium text-amber-700 dark:text-gold-400 uppercase tracking-wide mb-1">{option.label}</p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">{(previewListing?.viewsCount || 0).toLocaleString()} views</p>
                 </div>
               </div>
               <div className="mt-3 rounded-xl bg-brand-50 dark:bg-brand-500/5 border border-brand-200 dark:border-brand-500/20 p-4 text-center">
@@ -330,13 +330,14 @@ export default function BoostListingsPage() {
               ) : (
                 <>
                   <span className={selectedBoost === 'featured' ? '' : ''}>
-                    {selectedBoost?.label} — {formatCurrency(selectedBoost?.price || 0)}
+                    {LISTING_BOOST_OPTIONS.find(b => b.type === selectedBoost)?.label} — {formatCurrency(LISTING_BOOST_OPTIONS.find(b => b.type === selectedBoost)?.price || 0)}
                   </span>
                 </>
               )}
             </button>
           </div>
         </div>
+      </div>
     );
   }
 
@@ -351,7 +352,7 @@ export default function BoostListingsPage() {
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-50 dark:bg-success/10 border-2 border-green-200 dark:border-success/20">
           <CheckCircle2 className="h-10 w-10 text-green-500 dark:text-success" />
         </div>
-        <h1 className="Boost Activated!</h1>
+        <h1 className="font-display text-2xl font-bold text-gray-900 dark:text-white">Boost Activated!</h1>
         <p className="mt-2 text-muted">
           {preview ? `"${preview?.title}" is now getting ${boostType?.label?.toLowerCase()} visibility` : 'Your listing has been boosted!'}
         </p>
@@ -367,7 +368,7 @@ export default function BoostListingsPage() {
               )}
               <div className="absolute bottom-2 left-3">
                 <span className="rounded-lg bg-black/60 backdrop-blur-sm px-2.5 py-1 text-xs font-bold text-white">
-                  {formatCurrency(preview?.price)}
+                  {formatCurrency(preview?.price || 0)}
                 </span>
               </div>
             </div>
@@ -389,7 +390,7 @@ export default function BoostListingsPage() {
           </div>
         )}
 
-        <div className="mt-8 flex flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Link to="/dashboard/listings" className="btn-outline px-8 py-3">
             View All Listings
           </Link>
