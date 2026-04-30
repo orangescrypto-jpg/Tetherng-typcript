@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  CheckCircle2, X, ArrowRight, Shield, Star, Rocket,
-  Eye, Users, BarChart3, Headphones, Crown, Loader2,
-  AlertCircle, Check,
+  CheckCircle2, ArrowRight, Shield, Star,
+  Eye, Users, BarChart3, Crown, Check,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { SUBSCRIPTION_PLANS } from '@/utils/constants';
 import { useAuthStore } from '@/store/authStore';
-import { useUIStore } from '@/store/uiStore';
 import type { SubscriptionPlanSlug } from '@/types';
 
 type CheckoutStep = 'select' | 'confirm' | 'success' | 'failed';
@@ -17,7 +15,6 @@ type CheckoutStep = 'select' | 'confirm' | 'success' | 'failed';
 export default function SubscriptionPage() {
   const navigate = useNavigate();
   const { user, updateUser } = useAuthStore();
-  const { openPaymentModal } = useUIStore();
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanSlug | null>(null);
   const [step, setStep] = useState<CheckoutStep>('select');
   const [interval, setInterval] = useState<'month' | 'year'>('month');
@@ -37,14 +34,6 @@ export default function SubscriptionPage() {
 
   const handlePay = async () => {
     if (!selected) return;
-
-    // In production: open real Paystack/Flutterwave
-    // openPaymentModal({
-    //   amount: displayPrice(selected.price),
-    //   description: `${selected.name} Plan - ${interval}`,
-    //   metadata: { plan: selected.slug, userId: user?.id },
-    //   onSuccess: () => { setStep('success'); updateUser({ subscriptionPlan: selected.slug, subscriptionExpiry: '...' }); },
-    // });
 
     setStep('confirm'); // show loading
     await new Promise((r) => setTimeout(r, 2000));
