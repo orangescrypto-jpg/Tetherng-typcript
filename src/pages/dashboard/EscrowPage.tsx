@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
-  Shield, ArrowRight, Eye, Clock, CheckCircle2,
-  AlertCircle, ArrowDownUp, Filter, Search,
+  Shield, ArrowRight, Clock, CheckCircle2,
+  AlertCircle, Search,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { formatCurrency } from '@/utils/formatCurrency';
@@ -327,5 +327,3 @@ function EscrowRow({ escrow }: { escrow: EscrowTransaction }) {
     </button>
   );
 }
-
-import { useNavigate } from 'react-router-dom';
