@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
   User, Shield, CheckCircle2, Camera, Trash2, Eye, EyeOff,
-  ArrowRight, Loader2, AlertCircle,
+  ArrowRight, Loader2, AlertCircle, Bell,
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useAuthStore } from '@/store/authStore';
@@ -13,12 +13,11 @@ import { useAuthStore } from '@/store/authStore';
 const profileSchema = z.object({
   firstName: z.string().min(2, 'First name is required'),
   lastName: z.string().min(2, 'Last name is required'),
-  email: z.string().email('Enter a valid email').or(z.literal('keep-current', { errorMap: () => ({ message: 'Keep current email' })),
-  phone: z.string().min(10, 'Enter a valid phone number').or(z.literal('keep-current', { errorMap: () => ({ message: 'Keep current phone' })),
+  email: z.string().email('Enter a valid email').or(z.literal('keep-current', { errorMap: () => ({ message: 'Keep current email' }) })),
+  phone: z.string().min(10, 'Enter a valid phone number').or(z.literal('keep-current', { errorMap: () => ({ message: 'Keep current phone' }) })),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
-type PasswordData = z.infer<typeof passwordSchema>;
 
 const passwordSchema = z.object({
   currentPassword: z.string().min(6, 'Enter current password to confirm'),
@@ -34,17 +33,16 @@ type PasswordData = z.infer<typeof passwordSchema>;
 export default function SettingsPage() {
   const navigate = useNavigate();
   const { user, updateUser, logout } = useAuthStore();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'notifications' | 'danger'>('profile');
-  const [profileMsg, setProfileMsg] = useState<{ type: 'success' | 'error'; message: string }({ type: 'success', message: '' });
-  const [passwordMsg, setPasswordMsg] = useState<{ type: 'success' | 'error'; message: string }({ type: 'success', message: '' });
+  const [profileMsg, setProfileMsg] = useState<{ type: 'success' | 'error'; message: string }>({ type: 'success', message: '' });
+  const [passwordMsg, setPasswordMsg] = useState<{ type: 'success' | 'error'; message: string }>({ type: 'success', message: '' });
   const [deleteMsg, setDeleteMsg] = useState<{ show: boolean; message: string }>({ show: false, message: '' });
 
   // Profile form
   const {
     register: profileRegister,
     handleSubmit: handleProfileSubmit,
-    formState: { errors },
+    formState: { errors: profileErrors },
     reset: profileReset,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -60,14 +58,14 @@ export default function SettingsPage() {
   const {
     register: pwRegister,
     handleSubmit: handlePasswordSubmit,
-    formState: { errors: setPasswordMsg.message ? 'border-red-500 dark:border-danger' : 'border-gray-300 dark:border-dark-400 focus:border-red-500 focus:ring-red-500/50',
+    formState: { errors: pwErrors },
     reset: pwReset,
   } = useForm<PasswordData>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
-  const handleProfileSubmit = async (data: ProfileFormData) => {
+  const onProfileSubmit = async (data: ProfileFormData) => {
     setProfileMsg({ type: 'success', message: 'Profile updated successfully!' });
     updateUser({
       firstName: data.firstName || user?.firstName,
@@ -78,7 +76,7 @@ export default function SettingsPage() {
     profileReset();
   };
 
-  const handlePasswordSubmit = async (data: PasswordData) => {
+  const onPasswordSubmit = async (data: PasswordData) => {
     setPasswordMsg({ type: 'success', message: 'Password changed successfully!' });
     pwReset();
   };
@@ -99,19 +97,19 @@ export default function SettingsPage() {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <h1 className="font-display text-2xl font-bold text-gray-900 dark:text-white">Account Settings</h1>
-      <p className="Manage your profile, security, and notification preferences.</p>
+      <p className="text-sm text-muted">Manage your profile, security, and notification preferences.</p>
 
       {/* Tabs */}
       <div className="flex rounded-xl border border-gray-200 dark:border-dark-400 bg-gray-100 dark:bg-dark-200 p-1">
         {[
           { key: 'profile', label: 'Profile & Identity', icon: User },
           { key: 'security', label: 'Password & Security', icon: Shield },
-          { key: 'notifications', label: 'Notifications', icon: Shield },
+          { key: 'notifications', label: 'Notifications', icon: Bell },
           { key: 'danger', label: 'Danger Zone', icon: AlertCircle },
         ].map((tab) => (
           <button
             key={tab.key}
-            onClick={() => { setActiveTab(tab.key as typeof tab.value); setPasswordMsg({ type: 'success', message: '' }); }}
+            onClick={() => { setActiveTab(tab.key as typeof activeTab); setPasswordMsg({ type: 'success', message: '' }); }}
             className={cn(
               'flex-1 flex items-center gap-2 py-2.5 text-sm font-medium transition-all',
               activeTab === tab.key
@@ -144,7 +142,7 @@ export default function SettingsPage() {
             </div>
           )}
 
-          <form onSubmit={handleProfileSubmit} className="space-y-5">
+          <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-5">
             <h2 className="text-lg font-bold text-gray-900 dark:text-white">Personal Information</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -233,7 +231,7 @@ export default function SettingsPage() {
             {/* Password change */}
             {passwordMsg.message && (
               <div className={cn(
-                'rounded-xl border p-4 animate-slide-up',
+                'rounded-xl border p-4 animate-slide-up mt-6',
                 passwordMsg.type === 'error'
                   ? 'border-red-200 dark:border-danger/20 bg-red-50 dark:bg-danger/5'
                   : 'border-green-200 dark:border-success/20 bg-green-50 dark:bg-success/5',
@@ -248,7 +246,7 @@ export default function SettingsPage() {
             )}
 
             {!passwordMsg.message && (
-              <form onSubmit={handlePasswordSubmit} className="space-y-5">
+              <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-5 mt-6">
                 <h2 className="text-lg font-bold text-gray-900 dark:text-white">Change Password</h2>
                 <p className="text-sm text-muted">You'll need your current password to set a new one.</p>
 
@@ -283,14 +281,14 @@ export default function SettingsPage() {
                 </div>
 
                 <button
-                  type="update"
+                  type="submit"
                   disabled={passwordMsg.type === 'success'}
                   className="btn-primary w-full py-3 text-sm disabled:opacity-50"
                 >
                   Update Password
                 </button>
               </form>
-            </div>
+            )}
           </div>
         </div>
       )}
@@ -308,7 +306,7 @@ export default function SettingsPage() {
               { label: 'SMS Notifications', desc: 'Get SMS alerts for time-sensitive updates (requires phone verification)', default: false },
               { label: 'Marketing Emails', desc: 'Occasional promotional emails about new features and offers', default: false },
             ].map((pref) => (
-              <label className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-100 p-4 hover:border-gray-300 dark:hover:border-dark-500 transition-colors">
+              <label key={pref.label} className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-100 p-4 hover:border-gray-300 dark:hover:border-dark-500 transition-colors">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-dark-200">
                     <Bell className="h-5 w-5 text-gray-500 dark:text-dark-400" />
