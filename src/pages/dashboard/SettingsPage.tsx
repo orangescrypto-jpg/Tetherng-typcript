@@ -62,8 +62,14 @@ export default function SettingsPage() {
     defaultValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
-  const onProfileSubmit = async () => {
+  const onProfileSubmit = async (data: ProfileFormData) => {
     setProfileMsg({ type: 'success', message: 'Profile updated successfully!' });
+    updateUser({
+      firstName: data.firstName || user?.firstName,
+      lastName: data.lastName || user?.lastName,
+      email: data.email === 'keep-current' ? user?.email : data.email,
+      phone: data.phone === 'keep-current' ? user?.phone : data.phone,
+    });
     profileReset();
   };
 
