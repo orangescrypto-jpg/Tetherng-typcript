@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { Upload, X, AlertCircle, Film, ImageIcon, Loader2 } from 'lucide-react';
+import { Upload, X, AlertCircle, Film, ImageIcon } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 export interface UploadedFile {
@@ -242,7 +242,7 @@ export default function FileUpload({
       {files.length > 0 && (
         <div className="space-y-2">
           {/* Video first if present */}
-          {files.filter((f) => f.type === 'video').map((file, i) => {
+          {files.filter((f) => f.type === 'video').map((file) => {
             const realIndex = files.indexOf(file);
             return (
               <div key={`video-${realIndex}`} className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-dark-400 bg-white dark:bg-dark-100 p-3 animate-slide-up">
